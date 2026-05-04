@@ -16,7 +16,7 @@
 .ccb-content {background:#f6f6f6;} /*기본 배경색*/
 
 .ccb-player {padding: 11px 15px 11px 65px!important;  border-top: 1px solid rgba(0,0,0,0.1);} /*발언 기본 설정*/
-.tt_article_useless_p_margin p {padding-top: 11px !important; padding-bottom: 11px !important;} /*티스토리깨짐방지*/
+
 .ccb-player b { color:#555555; } /*발언자 이름 설정*/
 .ccb-player:after { border-radius: 25px; } /*발언자 두상 둥글게*/
 
@@ -54,4 +54,3 @@ span.dice-line { background: #fff3f9; border: 2px solid #ff73b9;} /*주사위*/
 
 /*==연속 발언 처리==*/
 #cocoback .continued-line { margin-top: -12px!important; padding-top: 0px !important; border-top: none!important; min-height: unset!important;}
-.tt_article_useless_p_margin p.continued-line {margin-top: -12px !important;}/*티스토리깨짐방지*/
