@@ -54,8 +54,8 @@ body {margin:0; padding:0;}
 .tabMain .p_c_gmdesc { padding: 11px 15px 11px 15px!important; min-height: unset; text-align:center; background: #5b5b5b; } 
 
 /*==시스템 발언 설정==*/
-.p_system { text-align:center; font-size: 0.85em!important; color: #ddd; padding-left: 15px!important; display: flex; flex-direction: column; align-items: center;} 
-.p_system b { color:#fff!important; background:#999; width: fit-content; padding: 0 10px; margin-bottom: 10px; border-radius:25px;}
+#cocoback .p_system { text-align:center; font-size: 0.85em!important; color: #ddd; padding-left: 15px!important; display: flex; flex-direction: column; align-items: center;} 
+#cocoback .p_system b { color:#fff!important; background:#999; width: fit-content; padding: 0 10px; margin-bottom: 10px; border-radius:25px;}
 
 /*==우측상단 탭버튼 설정==*/
 .hidden-tab { display: none !important; } 
