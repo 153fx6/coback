@@ -10,7 +10,7 @@
 .ccb-content { background:#e1e1e1;} /*기본 배경색*/
 
 .ccb-player { padding: 7px 15px 7px 55px!important; border-top: 2px solid rgba(0, 0, 0, 0.05); } /*발언 기본 설정*/
-.tt_article_useless_p_margin p {padding-top: 7px !important; padding-bottom: 7px !important;} /*티스토리깨짐방지*/
+
 .ccb-player b { display: inline; margin-bottom: unset; margin-right: 5px; color:#000000; } /*발언자 이름 설정*/
 .ccb-player:after {display: none; width:30px; height:30px; top:7px;   background-color: rgba(0,0,0,0.2); } /*발언자 두상*/
 
@@ -34,7 +34,7 @@
 
 /*==잡담 탭 설정==*/
 .tabTalk { background: #f5eaed; } 
-.tabTalk .ccb-player b { font-size:13px; color:#222222;}
+.tabTalk .ccb-player b { color:#222222!important;}
 
 /*== gm,나레이션 발언 설정==*/
 .p_c_gm b, .p_c_gmdesc b { display:none; } 
@@ -42,8 +42,8 @@
 .tabMain .p_c_gmdesc { padding: 7px 15px 7px 15px!important; background: #d3e5f5; border-color:#b1d9fa; } 
 
 /*==시스템 발언 설정==*/
-.p_system { color: #222222;} 
-.p_system b { background:#0071cc; }
+#cocoback .p_system { color: #222222;} 
+#cocoback .p_system b { background:#0071cc; }
 
 .ccbtoggle { background: #e1e1e1; color:#000000; accent-color:#0071cc; } /*우측상단 탭버튼*/
 
@@ -51,5 +51,4 @@ span.dice-line { background: #fef68e; border: 2px solid #b31515; padding: 0px 9p
 
 /*==연속 발언 처리==*/
 #cocoback .continued-line { margin-top: -5px!important; }
-.tt_article_useless_p_margin p.continued-line {margin-top: -5px !important;}/*티스토리깨짐방지*/
 

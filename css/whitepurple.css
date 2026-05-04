@@ -36,7 +36,6 @@
 
 /*==잡담 탭 설정==*/
 .tabTalk { background: #e4e0f1; } 
-.tabTalk .ccb-player b { color:#222222!; }
 
 /*== gm,나레이션 발언 설정==*/
 .p_c_gm b, .p_c_gmdesc b { display:none; } 
