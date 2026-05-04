@@ -28,7 +28,7 @@ body {margin:0; padding:0;}
 .tabMain .ccb-tabtitle, .tabTalk .ccb-tabtitle {display:none;}
 
 /*메인탭 발언*/
-.tabMain .ccb-player {min-height: 50px; padding: 20px 15px 11px 65px;}
+.tabMain .ccb-player {min-height: 50px; padding: 20px 15px 11px 65px!important;}
 .tabMain .ccb-player:after {display: block;}
 
 .tabMain { background: #2c2c2c; } /*메인탭 배경색*/
