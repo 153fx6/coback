@@ -20,7 +20,7 @@
 
 .tabMain .ccb-player {min-height: 30px; padding: 7px 15px 7px 55px!important;} /*메인탭 발언 여백*/
 
-.tabMain { background: #ffffff; } /*메인탭 배경색*/
+.tabMain { background: #f1f1f1; } /*메인탭 배경색*/
 
 /*==정보 탭 설정==*/
 .tabInfo { background: #f5e4d3; } 
@@ -33,7 +33,7 @@
 .tabSecret .player b { color:#653e10!important;}
 
 /*==잡담 탭 설정==*/
-.tabTalk { background: #f1f1f1; } 
+.tabTalk { background: #f5eaed; } 
 .tabTalk .ccb-player b { font-size:13px; color:#222222;}
 
 /*== gm,나레이션 발언 설정==*/
