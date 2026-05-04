@@ -83,13 +83,15 @@
 	
 	<section>
     <h2>4. 스타일 설정</h2>
+			<p class="ccbinfo">로그 스타일을 선택할 수 있습니다.</p>
+			<p class="ccbinfo-sub">* 커스텀 서식 파일(css) 다운로드는 하단의 배포링크 참고.</p>
     <div style="margin-bottom: 10px;">
         <label for="style_select">로그 스타일 선택: </label>
         <select id="style_select" style="padding: 8px; border-radius: 4px; background: #333; color: white; border: 1px solid #aaa;">
-            <option value="default">기본 (다크)</option>
+            <option value="default">기본 (코코포 스타일)</option>
+		      <option value="whitepurple">화이트퍼플명조</option>
             <option value="roll20">롤20 스타일</option>
-            <option value="whitepink">화이트핑크 명조</option>
-            <option value="custom">사용자 서식 업로드</option>
+            <option value="custom">커스텀 (사용자 서식 css 업로드)</option>
         </select>
     </div>
 
@@ -111,8 +113,8 @@
 const LOG_BASE_CSS_PATH = "css/default.css";
 const stylePaths = {
     default: "", 
-    roll20: "css/roll20.css",
-    whitepink: "css/whitepink.css"
+    whitepurple: "css/whitepurple.css",
+	roll20: "css/roll20.css"
 };
 
 function toggleCheck(current, targetClass) {
@@ -295,17 +297,8 @@ styleSelect.onchange = function() {
 
 const stylePresets = {
     default: "", 
-    roll20: `
-        /* 롤20 스타일 예시 */
-        .ccb-player { border: 1px solid #ccc; background: #fdfdfd; color: #333; margin: 5px 0; }
-        .ccb-player b { color: #ce0000 !important; }
-    `,
-    whitepink: `
-        /* 화이트핑크 명조 예시 */
-        #cocoback { font-family: 'serif'; background: #fff5f7; }
-        .ccb-player { color: #555; border-bottom: 1px dashed #ffc1cc; }
-        .ccb-player b { color: #ff69b4 !important; }
-    `
+	 whitepurple: "",
+    roll20: ""
 };
 
 
