@@ -1,0 +1,57 @@
+@font-face {
+    font-family: 'ChosunIlboMyungjo';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');
+    font-weight: normal;
+    font-display: swap;
+}
+#cocoback {font-family: 'ChosunIlboMyungjo', 'Noto Serif KR', 'Nanum Myeongjo', serif;} /*기본폰트설정*/
+#cocoback p {color:#000000;} /*기본 글자색*/
+
+
+/*==상단 제목바==*/
+#tr_top { background: #ffffff; }
+#tr_top a { color:#000000; }
+#tr_top a:hover {color: #ff73b9;} 
+
+.ccb-content {background:#f6f6f6;} /*기본 배경색*/
+
+.ccb-player {padding: 11px 15px 11px 65px!important;  border-top: 1px solid rgba(0,0,0,0.1);} /*발언 기본 설정*/
+.tt_article_useless_p_margin p {padding-top: 11px !important; padding-bottom: 11px !important;} /*티스토리깨짐방지*/
+.ccb-player b { color:#555555; } /*발언자 이름 설정*/
+.ccb-player:after { border-radius: 25px; } /*발언자 두상 둥글게*/
+
+/*==탭 기본 설정==*/
+.ccb-tab {background: #ffe9f3;} 
+.ccb-tabtitle { background: #ffffff;  color: #333333; }
+
+.tabMain .ccb-player {padding: 20px 15px 11px 65px!important;} /*메인탭 발언 여백*/
+
+.tabMain { background: #ffffff; } /*메인탭 배경색*/
+.tabInfo { background: #dbdbdb; } /*정보탭 배경색*/
+
+/*==비밀 탭 설정==*/
+.tabSecret {border-left: 10px solid #ff73b9; border-top: 1px solid #ff73b996; background: #e1e1e1;}
+.tabSecret .ccb-tabtitle { background: #ff73b9;} 
+.tabSecret .ccb-player b { color:#222222!important;}
+
+/*==잡담 탭 설정==*/
+.tabTalk { background: #e4e0f1; } 
+.tabTalk .ccb-player b { color:#222222!; }
+
+/*== gm,나레이션 발언 설정==*/
+.p_c_gm b, .p_c_gmdesc b { display:none; } 
+.tabMain .p_c_gm { padding: 11px 15px 11px 65px!important; background: #f5f4f7; } 
+.tabMain .p_c_gmdesc { padding: 11px 15px 11px 15px!important; background: #f5ecf9; } 
+
+/*==시스템 발언 설정==*/
+.p_system { color: #555555; } 
+.p_system b { background:#ff73b9; }
+
+
+.ccbtoggle { background: #eeeeee; color:#333333; accent-color:#ff73b9; } /*우측상단 탭버튼*/
+
+span.dice-line { background: #fff3f9; border: 2px solid #ff73b9;} /*주사위*/
+
+/*==연속 발언 처리==*/
+#cocoback .continued-line { margin-top: -12px!important; padding-top: 0px !important; border-top: none!important; min-height: unset!important;}
+.tt_article_useless_p_margin p.continued-line {margin-top: -12px !important;}/*티스토리깨짐방지*/

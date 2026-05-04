@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🐔코백변환기</title>
+    <style>
+        body { font-family: 'Malgun Gothic', sans-serif; background: #333; color: white; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: #585858; padding: 25px; border-radius: 15px; }
+        section { border-bottom: 1px solid #333; padding: 15px 0; }
+        h1 { text-align: center; color: #fff; }
+        input[type="text"], input[type="file"] { width: 100%; padding: 8px; margin: 5px 0; border-radius: 4px; border: none; box-sizing: border-box; }
+        .char-row { display: grid; grid-template-columns: 1fr 1.5fr 1.2fr 0.8fr 0.5fr; gap: 8px; background: rgba(0,0,0,0.2); padding: 10px; margin-top: 10px; border-radius: 8px; align-items: center; }
+        .color-group { display: flex; gap: 4px; align-items: center; }
+        .color-group input[type="color"] { width: 30px; height: 30px; border: none; cursor: pointer; background: none; padding: 0; }
+        .btn-add { background: #333; color: white; width: 100%; cursor: pointer; padding: 8px; font-weight: bold; margin-top: 10px; border: none; border-radius: 4px; }
+		.btn-addadd { display: flex; gap: 5px; margin-top: 10px; }
+        .btn-convert { background: #ae70ff; color: white; width: 100%; cursor: pointer; padding: 15px; font-size: 1.1rem; font-weight: bold; margin-top: 20px; border: none; border-radius: 4px; }
+        .btn-copy { background: #333; color: white; width: 100%; cursor: pointer; padding: 15px; font-size: 1.1rem; font-weight: bold; margin-top: 10px; border: none; border-radius: 4px; }
+        .btn-del { background: #ae70ff; color: white; cursor: pointer; padding: 4px; font-size: 0.75rem; border: none; border-radius: 3px; }
+		.check-group label { accent-color: #ae70ff; cursor: pointer; display: block; font-size: 0.75rem; line-height: 1.2;}
+		.ccbinfo {font-size: 12px;}
+		.ccbinfo-sub {font-size: 11px; color: #bbb; margin-top: 5px;}
+		.by {font-size: 12px; text-align: center; margin-top: 20px; color: #777;}
+		.by a:link, .by a:visited {color: #777;}
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🐔코코포 백업용 로그서식 변환기</h1>
+    <section>
+        <h2>1. 세션 설정</h2>
+        <input type="text" id="s_title" placeholder="세션 제목">
+        <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 10px;">
+            <input type="text" id="s_card" placeholder="&#91;선택사항&#93; 세션카드 이미지 주소">
+            <input type="text" id="s_width" placeholder="카드 너비" value="1200px">
+        </div>
+    </section>
+    <section>
+        <h2>2. 캐릭터 설정</h2>
+			<p class="ccbinfo">이미지나 색상을 추가로 지정할 경우에만 입력.</p>
+			<p class="ccbinfo-sub">* 중복된 이름의 캐릭터는 마지막에 설정된 정보가 우선 적용됩니다.</p>
+        <div id="char_list">
+            <div class="char-row">
+                <input type="text" class="c_name" placeholder="캐릭터명">
+                <input type="text" class="c_img" placeholder="두상 주소">
+                <div class="color-group">
+                    <input type="color" value="#ffffff" oninput="this.nextElementSibling.value = this.value">
+                    <input type="text" class="c_color" placeholder="지정색(#HEX)" oninput="this.previousElementSibling.value = this.value">
+                </div>
+                <div class="check-group">
+						<label><input type="checkbox" class="c_gm" onchange="toggleCheck(this, '.c_desc')"> GM</label>
+						<label><input type="checkbox" class="c_desc" onchange="toggleCheck(this, '.c_gm')"> 나레이션</label>
+					</div>
+                <button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>
+            </div>
+        </div>
+        <button type="button" class="btn-add" id="btn_add_char">+ 캐릭터 추가</button>
+		
+			<div class="btn-addadd">
+				<button type="button" class="btn-add" id="btn_save_chars">💾 캐릭터 설정.txt로 저장</button>
+				<button type="button" class="btn-add" id="btn_load_chars">📂 캐릭터 설정.txt 불러오기</button>
+			</div>
+			<input type="file" id="f_char_config" accept=".txt" style="display:none;">		
+		
+    </section>
+ 
+	<section>
+		<h2>3. 파일 로드</h2>
+		<p class="ccbinfo">다중파일 업로드시 중복되는 내용을 이어붙여 하나의 파일로 병합합니다.<br>
+		파일을 드래그하여 병합 순서를 변경할 수 있습니다.</p>
+		
+		<div id="drop_zone" style="border: 2px dashed #aaa; border-radius: 10px; padding: 30px; text-align: center; background: rgba(255,255,255,0.05); cursor: pointer;">
+			<p style="margin: 0; color: #ccc;">로그 파일을 이곳에 드래그하거나 클릭하세요.</p>
+		</div>
+
+		<!-- 파일 순서 조절 리스트 -->
+		<ul id="file_list" style="list-style: none; padding: 0; margin-top: 15px;"></ul>
+
+		<p style="display: none;"><input type="file" id="f_log" accept=".html" multiple></p>
+	</section>
+	
+	<section>
+    <h2>4. 스타일 설정</h2>
+    <div style="margin-bottom: 10px;">
+        <label for="style_select">로그 스타일 선택: </label>
+        <select id="style_select" style="padding: 8px; border-radius: 4px; background: #333; color: white; border: 1px solid #aaa;">
+            <option value="default">기본 (다크)</option>
+            <option value="roll20">롤20 스타일</option>
+            <option value="whitepink">화이트핑크 명조</option>
+            <option value="custom">사용자 서식 업로드</option>
+        </select>
+    </div>
+
+    <!-- 사용자 서식 선택 시에만 나타나는 파일 인풋 -->
+    <div id="custom_css_area" style="display: none;">
+        <p class="ccbinfo">업로드한 CSS 파일이 로그에 직접 삽입됩니다.</p>
+        <input type="file" id="f_css" accept=".css">
+    </div>
+</section>
+	
+	
+    <button type="button" class="btn-convert" id="btn_main_convert">로그 변환 및 다운로드</button>
+    <button type="button" class="btn-copy" id="btn_tistory_copy">티스토리/게시판용 HTML 코드 복사</button>
+</div>
+<div class="by"><p>최종 수정: 26.05.05 / 배포&사용법 <a href="https://www.postype.com/@wwwwon/post/21249637" target="_blank" alt="배포링크">(링크)</a></p></div>
+
+<script>
+
+const LOG_BASE_CSS_PATH = "css/default.css";
+const stylePaths = {
+    default: "", 
+    roll20: "css/roll20.css",
+    whitepink: "css/whitepink.css"
+};
+
+function toggleCheck(current, targetClass) {
+    if (current.checked) {
+        const row = current.closest('.char-row');
+        row.querySelector(targetClass).checked = false;
+    }
+}
+    document.getElementById('btn_add_char').onclick = function() {
+        const div = document.createElement('div');
+        div.className = 'char-row';
+        div.innerHTML = `<input type="text" class="c_name" placeholder="캐릭터명"><input type="text" class="c_img" placeholder="두상 주소"><div class="color-group"><input type="color" value="#ffffff" oninput="this.nextElementSibling.value = this.value"><input type="text" class="c_color" placeholder="지정색(#HEX)" oninput="this.previousElementSibling.value = this.value"></div><div class="check-group">
+    <label><input type="checkbox" class="c_gm" onchange="toggleCheck(this, '.c_desc')"> GM</label>
+    <label><input type="checkbox" class="c_desc" onchange="toggleCheck(this, '.c_gm')"> 나레이션</label>
+</div><button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>`;
+        document.getElementById('char_list').appendChild(div);
+    };
+	
+	
+	// [저장 로직] 화면의 설정을 txt 파일로 내보내기
+document.getElementById('btn_save_chars').onclick = function() {
+    let output = "";
+    document.querySelectorAll('.char-row').forEach(row => {
+        const name = row.querySelector('.c_name').value;
+        const img = row.querySelector('.c_img').value;
+        const color = row.querySelector('.c_color').value;
+        const isGm = row.querySelector('.c_gm').checked;
+        const isDesc = row.querySelector('.c_desc').checked;
+        
+        let attr = "";
+        if (isGm) attr = "GM";
+        else if (isDesc) attr = "DESC";
+        
+        // 데이터 순서: 이름, 이미지URL, 컬러코드, 속성;
+        output += `${name},${img},${color},${attr};\n`;
+    });
+
+    if (!output.trim()) { alert("저장할 설정이 없습니다."); return; }
+
+    const blob = new Blob([output], { type: 'text/plain' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'character_settings.txt';
+    a.click();
+};
+
+
+// [불러오기 로직] 
+document.getElementById('btn_load_chars').onclick = function() {
+    document.getElementById('f_char_config').click();
+};
+
+
+document.getElementById('f_char_config').onchange = async function(e) {
+    if (!e.target.files.length) return;
+    const text = await e.target.files[0].text();
+    const charList = document.getElementById('char_list');
+    
+    const cleanText = text.replace(/\r?\n|\r/g, ""); 
+    const entries = cleanText.split(';');
+    
+    entries.forEach(entry => {
+        if (!entry.trim()) return;
+
+        const data = entry.split(','); 
+        const name  = data[0] || "";
+        const img   = data[1] || "";
+        const color = data[2] || "";
+        const attr  = (data[3] || "");
+
+        const div = document.createElement('div');
+        div.className = 'char-row';
+        div.innerHTML = `
+            <input type="text" class="c_name" placeholder="캐릭터명" value="${name}">
+            <input type="text" class="c_img" placeholder="두상 주소" value="${img}">
+            <div class="color-group">
+                <input type="color" value="${color || '#ffffff'}" oninput="this.nextElementSibling.value = this.value">
+                <input type="text" class="c_color" placeholder="지정색(#HEX)" value="${color}" oninput="this.previousElementSibling.value = this.value">
+            </div>
+            <div class="check-group">
+                <label><input type="checkbox" class="c_gm" ${attr.trim() === 'GM' ? 'checked' : ''} onchange="toggleCheck(this, '.c_desc')"> GM</label>
+                <label><input type="checkbox" class="c_desc" ${attr.trim() === 'DESC' ? 'checked' : ''} onchange="toggleCheck(this, '.c_gm')"> 나레이션</label>
+            </div>
+            <button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>
+        `;
+        charList.appendChild(div);
+    });
+
+    this.value = ""; 
+};
+	
+
+//드래그앤드롭
+const dropZone = document.getElementById('drop_zone');
+const logInput = document.getElementById('f_log');
+
+dropZone.onclick = () => logInput.click();
+
+dropZone.ondragover = (e) => {
+    e.preventDefault();
+    dropZone.style.background = "rgba(174, 112, 255, 0.2)";
+    dropZone.style.borderColor = "#ae70ff";
+};
+
+dropZone.ondragleave = (e) => {
+    e.preventDefault();
+    dropZone.style.background = "rgba(255,255,255,0.05)";
+    dropZone.style.borderColor = "#aaa";
+};
+
+dropZone.ondrop = (e) => {
+    e.preventDefault();
+    dropZone.style.background = "rgba(255,255,255,0.05)";
+    dropZone.style.borderColor = "#aaa";
+    handleFiles(e.dataTransfer.files); 
+};
+
+logInput.onchange = (e) => {
+    if (e.target.files.length > 0) {
+        dropZone.querySelector('p').innerText = `${e.target.files.length}개의 파일이 선택되었습니다.`;
+    }
+};
+
+
+// 파일 관리 및 드래그 정렬
+let selectedFiles = []; 
+const fileListUI = document.getElementById('file_list');
+
+function updateFileListUI() {
+    fileListUI.innerHTML = "";
+    selectedFiles.forEach((file, index) => {
+        const li = document.createElement('li');
+        li.style = "background: #444; margin-bottom: 5px; padding: 10px; border-radius: 5px; cursor: grab; display: flex; justify-content: space-between; align-items: center; font-size: 13px;";
+        li.draggable = true;
+        li.innerHTML = `<span>☰ ${file.name}</span><button type="button" class="btn-del" onclick="removeFile(${index})">제거</button>`;
+        
+        li.ondragstart = (e) => { e.dataTransfer.setData('text/plain', index); li.style.opacity = "0.5"; };
+        li.ondragend = () => li.style.opacity = "1";
+        li.ondragover = (e) => e.preventDefault();
+        li.ondrop = (e) => {
+            e.preventDefault();
+            const fromIndex = e.dataTransfer.getData('text/plain');
+            const toIndex = index;
+            if (fromIndex !== toIndex) {
+                const movedFile = selectedFiles.splice(fromIndex, 1)[0];
+                selectedFiles.splice(toIndex, 0, movedFile);
+                updateFileListUI();
+            }
+        };
+        fileListUI.appendChild(li);
+    });
+}
+
+function removeFile(index) {
+    selectedFiles.splice(index, 1);
+    updateFileListUI();
+}
+
+function handleFiles(files) {
+    const newFiles = Array.from(files);
+    newFiles.sort((a, b) => a.name.localeCompare(b.name, undefined, {numeric: true, sensitivity: 'base'}));
+    selectedFiles = [...selectedFiles, ...newFiles];
+    updateFileListUI();
+}
+
+dropZone.onclick = () => logInput.click();
+dropZone.ondragover = (e) => { e.preventDefault(); dropZone.style.background = "rgba(174, 112, 255, 0.2)"; dropZone.style.borderColor = "#ae70ff"; };
+dropZone.ondragleave = (e) => { e.preventDefault(); dropZone.style.background = "rgba(255,255,255,0.05)"; dropZone.style.borderColor = "#aaa"; };
+dropZone.ondrop = (e) => { e.preventDefault(); dropZone.style.background = "rgba(255,255,255,0.05)"; dropZone.style.borderColor = "#aaa"; handleFiles(e.dataTransfer.files); };
+logInput.onchange = (e) => handleFiles(e.target.files);
+
+
+// 스타일 설정 및 드롭다운 
+const styleSelect = document.getElementById('style_select');
+const customCssArea = document.getElementById('custom_css_area');
+
+styleSelect.onchange = function() {
+    customCssArea.style.display = (this.value === 'custom') ? 'block' : 'none';
+};
+
+const stylePresets = {
+    default: "", 
+    roll20: `
+        /* 롤20 스타일 예시 */
+        .ccb-player { border: 1px solid #ccc; background: #fdfdfd; color: #333; margin: 5px 0; }
+        .ccb-player b { color: #ce0000 !important; }
+    `,
+    whitepink: `
+        /* 화이트핑크 명조 예시 */
+        #cocoback { font-family: 'serif'; background: #fff5f7; }
+        .ccb-player { color: #555; border-bottom: 1px dashed #ffc1cc; }
+        .ccb-player b { color: #ff69b4 !important; }
+    `
+};
+
+
+async function processLogData() {
+	const sWidth = document.getElementById('s_width').value || "1200px";
+   const selectedStyleKey = document.getElementById('style_select').value;
+    
+    let logBaseCss = ""; 
+    let finalUserCss = ""; 
+
+    try {
+        // 기본 뼈대 CSS 읽기
+        const baseRes = await fetch(LOG_BASE_CSS_PATH);
+        if (baseRes.ok) {
+            logBaseCss = await baseRes.text();
+            logBaseCss = logBaseCss.replace(/__S_WIDTH__/g, sWidth);
+        }
+
+        // 프리셋 스타일 처리
+        if (selectedStyleKey === 'custom') {
+            const cssFileInput = document.getElementById('f_css');
+            finalUserCss = cssFileInput.files.length ? await cssFileInput.files[0].text() : "";
+        } 
+        else if (selectedStyleKey !== 'default' && stylePaths[selectedStyleKey]) {
+            const styleRes = await fetch(stylePaths[selectedStyleKey]);
+            if (styleRes.ok) finalUserCss = await styleRes.text();
+        }
+    } catch (e) {
+        console.error("CSS 로드 실패:", e);
+    }
+	
+		// 파일 선택 여부 확인
+      if (!selectedFiles.length) { alert("로그 파일을 선택해주세요!"); return null; }
+
+
+		//병합로직
+        const files = selectedFiles;
+        let combinedLines = [];
+        
+        for (let i = 0; i < files.length; i++) {
+            const logText = await files[i].text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(logText, 'text/html');
+            const currentFileLines = Array.from(doc.querySelectorAll('p'));
+
+            if (i === 0) {
+                combinedLines = currentFileLines;
+            } else {
+                let overlapIndex = 0;
+                const prevEnd = combinedLines.slice(-30); 
+
+                // 현재 파일의 앞부분 100줄을 검사
+                for (let j = 0; j < Math.min(currentFileLines.length, 100); j++) {
+                    // 최대 3줄까지 역순으로 비교하여 가장 긴 일치 구간을 찾음
+                    for (let k = 3; k >= 1; k--) {
+                        let match = true;
+                        for (let m = 0; m < k; m++) {
+                            const currentLine = currentFileLines[j + m];
+                            const prevLine = prevEnd[prevEnd.length - k + m];
+                            
+                            if (!currentLine || !prevLine || currentLine.outerHTML !== prevLine.outerHTML) {
+                                match = false;
+                                break;
+                            }
+                        }
+
+                        if (match) {
+                            overlapIndex = j + k;
+                            break; // k줄 일치를 찾았으면 j 루프의 다음 단계로
+                        }
+                    }
+                }
+                combinedLines = combinedLines.concat(currentFileLines.slice(overlapIndex));
+            }
+        }
+
+        const allLines = combinedLines;
+        const sTitle = document.getElementById('s_title').value || "세션 로그";
+        const sCard = document.getElementById('s_card').value;
+
+        const setupChars = {};
+        document.querySelectorAll('.char-row').forEach((row) => {
+            const name = row.querySelector('.c_name').value;
+            const img = row.querySelector('.c_img').value.trim();
+            const color = row.querySelector('.c_color').value.trim();
+            const isGm = row.querySelector('.c_gm').checked;
+            const isDesc = row.querySelector('.c_desc').checked;
+
+            if (name !== "" || img !== "" || color !== "" || isGm || isDesc) {
+                setupChars[name] = { userColor: color, img: img, isGm: isGm, isDesc: isDesc }; 
+            }
+        });
+
+        const lastDetectedColor = {};
+        for (let i = allLines.length - 1; i >= 0; i--) {
+            const p = allLines[i];
+            const spans = p.querySelectorAll('span');
+            if (spans.length >= 3) {
+                const name = spans[1].textContent;
+                const color = p.getAttribute('style')?.match(/color:\s*(#[a-fA-F0-9]{6})/)?.[1];
+                if (!lastDetectedColor[name] && color && color !== '#888888') lastDetectedColor[name] = color;
+            }
+        }
+
+        const finalCharMap = {};
+        let tabEtcCounter = 1, charCounter = 1, charStyles = "", lastTabClass = "", lastSpeaker = "", tabsHtml = "";
+        let tabsData = {}, etcMap = {}; 
+        let lastSecretKey = ""; 
+
+        allLines.forEach(p => {
+            const spans = p.querySelectorAll('span');
+            if (spans.length >= 3) {
+                const name = spans[1].textContent;
+                const isRegistered = (setupChars[name] !== undefined);
+                const setup = setupChars[name] || {};
+                
+                let rawTabText = spans[0].textContent.trim();
+                let cleanTabText = rawTabText.replace(/[\[\]]/g, '');
+
+                let currentTabClass = "";
+                let groupName = "";
+                let displayTitle = "";
+                let currentSecretKey = ""; 
+
+                if (/(main|메인|メイン)/i.test(cleanTabText)) { currentTabClass = "tabMain"; groupName = "메인"; displayTitle = "메인"; }
+                else if (/(info|정보|情報)/i.test(cleanTabText)) { currentTabClass = "tabInfo"; groupName = "정보"; displayTitle = "정보"; }
+                else if (/(other|잡담|雑談)/i.test(cleanTabText)) { currentTabClass = "tabTalk"; groupName = "잡담"; displayTitle = "잡담"; }
+                else if (cleanTabText.includes('비밀(')) { 
+                    currentTabClass = "tabSecret"; groupName = "비밀"; displayTitle = cleanTabText;
+                    const participants = cleanTabText.match(/\(([^)]+)\)/)?.[1] || cleanTabText;
+                    currentSecretKey = participants.split(/,\s*/).map(p => p.trim()).sort().join('-');
+                }
+                else {
+                    if (!etcMap[cleanTabText]) etcMap[cleanTabText] = "tabEtc" + (tabEtcCounter++);
+                    currentTabClass = etcMap[cleanTabText]; groupName = cleanTabText; displayTitle = cleanTabText;
+                }
+                
+                if (!tabsData[currentTabClass]) tabsData[currentTabClass] = groupName;
+
+                if (!finalCharMap[name]) {
+                    if (name.toLowerCase() === 'system') {
+                        finalCharMap[name] = { pClass: "system", color: "" };
+                    } else if (setup.isGm || setup.isDesc) {
+                        finalCharMap[name] = { pClass: setup.isGm ? "c_gm" : "c_gmdesc", color: setup.userColor || "" };
+                    } else {
+                        const pClass = 'c' + (charCounter++);
+                        let finalColor = setup.userColor || lastDetectedColor[name] || "";
+                        finalCharMap[name] = { pClass: pClass, color: finalColor };
+                        if (setup.img) charStyles += `.p_${pClass}:after { content:''; background-image: url('${setup.img}') !important; }\n`;
+                        if (finalColor) charStyles += `.p_${pClass} b { color: ${finalColor} !important; }\n`;
+                    }
+                }
+
+                const isTabChanged = (currentTabClass !== lastTabClass) || (currentTabClass === "tabSecret" && currentSecretKey !== lastSecretKey);
+
+                if (isTabChanged) {
+                    if (lastTabClass !== "") tabsHtml += `</div>`;
+                    tabsHtml += `<div class="ccb-tab ${currentTabClass}"><div class="ccb-tabtitle">${displayTitle}</div>`;
+                    lastSpeaker = null; lastSecretKey = "";
+                }
+
+                let isContinued = ((name !== "" || isRegistered) && name === lastSpeaker);
+                let pClass = "ccb-player" + (isContinued ? " continued-line" : "") + (finalCharMap[name] ? " p_" + finalCharMap[name].pClass : "");
+                let messageHtml = spans[2].innerHTML;
+                if (/\(\d+[dD]\d+/.test(spans[2].textContent) || spans[2].textContent.includes('(choice ') || spans[2].textContent.includes('choice[')) {
+                    messageHtml = `<span class="dice-line">${messageHtml}</span>`;
+                }
+
+                tabsHtml += `<p class="${pClass}"><b>${name}</b>${messageHtml}</p>`;
+                lastTabClass = currentTabClass; 
+                lastSpeaker = (name !== "" || isRegistered) ? name : null;
+                lastSecretKey = currentSecretKey;
+            }
+        });
+        if (lastTabClass !== "") tabsHtml += `</div>`;
+
+        let topBar = `<div id="tr_top"><a href="#">${sTitle}</a><div id="tabToggleButtons">`;
+        Object.keys(tabsData).forEach(cls => {
+            if (cls !== "tabMain") topBar += `<label class="ccbtoggle">${tabsData[cls]} <input type="checkbox" data-target="${cls}" checked></label>`;
+        });
+        topBar += `</div></div>`;
+
+        return { sTitle, sCard, sWidth, charStyles, logBaseCss: logBaseCss, userCss: finalUserCss, topBar, tabsHtml };
+    } // processLogData 끝
+
+
+
+    document.getElementById('btn_main_convert').onclick = async function() {
+        const data = await processLogData();
+        if (!data) return;
+        const fullHtml = `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>${data.sTitle}</title><style>${data.logBaseCss} ${data.charStyles} ${data.userCss}</style></head><body><div id="cocoback">${data.topBar}<div class="ccb-content">${data.sCard ? `<img src="${data.sCard}" class="tcimg">` : ""}${data.tabsHtml}</div><script>document.querySelectorAll('.ccbtoggle input').forEach(i => { i.onchange = function(){ document.querySelectorAll('.'+this.dataset.target).forEach(el => el.classList.toggle('hidden-tab', !this.checked)); }; });<\/script></div></body></html>`;
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(new Blob([fullHtml], { type: 'text/html' }));
+        a.download = `${data.sTitle}.html`; a.click();
+    };
+
+    document.getElementById('btn_tistory_copy').onclick = async function() {
+        const data = await processLogData();
+        if (!data) return;
+        const tistoryHtml = `<style>
+		
+	/* 티스토리 */
+	.tt_article_useless_p_margin p { margin-top: 0 !important; margin-bottom: 0 !important; padding-top: 20px !important; padding-bottom: 15px !important;}
+	.tt_article_useless_p_margin p.continued-line {margin-top: -12px !important; padding-top: 0px !important; border-top: none !important; min-height: unset !important;}
+	.article p, .article h4, .article ul, .article ol{margin-bottom: unset!important;}
+	.tt_article_useless_p_margin.contents_style {position: relative!important;}
+	
+${data.logBaseCss}
+${data.charStyles} ${data.userCss}
+	
+	#tr_top {position:absolute!important; margin: 0!important;}
+
+</style><div id="cocoback">${data.topBar}<div class="ccb-content">${data.sCard ? `<div class="titlecard"><img src="${data.sCard}" class="tcimg"></div>` : ""}${data.tabsHtml}</div><script>document.querySelectorAll('.ccbtoggle input').forEach(i => { i.onchange = function(){ document.querySelectorAll('.'+this.dataset.target).forEach(el => el.classList.toggle('hidden-tab', !this.checked)); }; });<\/script>`;
+        navigator.clipboard.writeText(tistoryHtml).then(() => { alert("티스토리/게시판용 HTML 코드가 복사되었습니다."); });
+    };
+</script></div>
+</body>
+</html>

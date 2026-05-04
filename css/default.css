@@ -1,0 +1,53 @@
+@font-face {
+    font-family: 'Pretendard';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/pretendard@1.0/Pretendard-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-display: swap;
+}	
+body {margin:0; padding:0;}
+#cocoback {position:relative; line-height: 1; font-family: 'Pretendard', 'NanumBarunGothic', 'NanumGothic', sans-serif;}
+#cocoback p {position:relative; color:#fff; font-size: 16px;}
+#tr_top { position:fixed; z-index:2; padding: 15px 3%; width:94%; height: 30px; background: #212121; display: flex; align-items: center; justify-content: space-between; top:0; }
+#tr_top a { font-weight:bold; color:#fff; text-decoration: none; font-size: 20px; }
+#tr_top a:hover {color: #ae70ff;} 
+.ccb-content { padding-top: 60px; background:#212121;}
+.tcimg { width:100%; max-width: __S_WIDTH__; display: block; margin: 0 auto; }
+
+.ccb-player { position:relative; padding: 11px 15px 11px 65px; line-height: 1.9; letter-spacing: -0.01em; border-top: 1px solid rgba(255,255,255,0.12); margin:0; }
+.ccb-player b { display: block; line-height: 1; font-size: 0.98em; margin-bottom: 5px; color:#888888; }
+.ccb-player:after {display: none; width:40px; height:40px; position:absolute; top:20px; left:15px; background-size: cover; background-color: rgba(0,0,0,0.2); }
+
+.ccb-tab {position: relative; overflow: hidden; background: #666;}
+.ccb-tabtitle {position: absolute; left: 10px; top: 10px; z-index: 1; padding: 7px; border-radius: 5px; background: #ffffff; font-size: 12px; font-weight: bold; color: #333; max-width: 23px; overflow: hidden;}
+.tabMain .ccb-tabtitle, .tabTalk .ccb-tabtitle {display:none;}
+.tabMain .ccb-player {min-height: 50px; padding: 20px 15px 11px 65px;}
+.tabMain .ccb-player:after {display: block;}
+
+.tabMain { background: #2c2c2c; } 
+.tabInfo { background: #455a64; } 
+
+.tabSecret {border-left: 10px solid #ae70ff; border-top: 1px solid rgba(255, 255, 255, 0.3); background: #000;}
+.tabSecret .ccb-tabtitle { padding: 5px 15px; font-size: 12px; width: fit-content; max-width:none; margin-bottom: 9px; position: relative; background: #ae70ff;} 
+.tabSecret .ccb-player b { font-size:13px; color:#999!important; display:inline; margin-right: 10px;}
+.tabSecret .continued-line b {display:inline!important; visibility: hidden;}
+.tabSecret .ccb-tabtitle + .ccb-player {border-top: 0;}
+
+#cocoback .tabTalk p { font-size: 0.85em; } 
+.tabTalk { background: #424242; } 
+.tabTalk .ccb-player b { font-size:13px; color:#999!important; display:inline; margin-right: 10px;}
+.tabTalk .continued-line b {display:inline!important; visibility: hidden;}
+
+.p_c_gm b, .p_c_gmdesc b { display:none; } 
+.tabMain .p_c_gm { padding: 11px 15px 11px 65px; min-height: unset; background: #333; } 
+.tabMain .p_c_gmdesc { padding: 11px 15px 11px 15px; min-height: unset; text-align:center; background: #5b5b5b; } 
+.p_system { text-align:center; font-size: 0.85em!important; color: #ddd; padding-left: 15px!important; display: flex; flex-direction: column; align-items: center;} 
+.p_system b { color:#fff!important; background:#999; width: fit-content; padding: 0 10px; margin-bottom: 10px; border-radius:25px;}
+
+.hidden-tab { display: none !important; } 
+#tabToggleButtons { display: flex; gap: 5px; }
+.ccbtoggle { cursor: pointer; font-size: 12px; display: flex; align-items: center; background: #333; padding: 5px 7px; border-radius: 20px; color:#fff; accent-color:#ae70ff; }
+
+span.dice-line { background-color: #111; font-size: 0.85em; padding: 5px 20px; border-radius: 5px; border: 2px solid rgba(255, 255, 255, 0.3); display: inline-block; margin: 5px 0; }
+
+.continued-line b, .continued-line:after { display: none!important; }
+.continued-line { margin-top: -12px!important; padding-top: 0px !important; border-top: none!important; min-height: unset!important;}
