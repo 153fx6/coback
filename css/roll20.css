@@ -30,11 +30,10 @@
 /*==비밀 탭 설정==*/
 .tabSecret {border-left: 10px solid #fff082; border-top: 1px solid #fff082; background: #fffcdb;}
 .tabSecret .ccb-tabtitle { background: #fff082;} 
-.tabSecret .player b { color:#653e10!important;}
+.tabSecret .ccb-player b { color:#653e10!important;}
 
 /*==잡담 탭 설정==*/
 .tabTalk { background: #f5eaed; } 
-.tabTalk .ccb-player b { color:#222222!important;}
 
 /*== gm,나레이션 발언 설정==*/
 .p_c_gm b, .p_c_gmdesc b { display:none; } 
