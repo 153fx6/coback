@@ -5,7 +5,7 @@
     font-display: swap;
 }	
 body {margin:0; padding:0;}
-#cocoback {position:relative; line-height: 1; font-family: 'Pretendard', 'NanumBarunGothic', 'NanumGothic', sans-serif;}/*(디폴트)기본폰트설정*/
+body #cocoback, body #cocoback * {position:relative; line-height: 1; font-family: 'Pretendard', 'NanumBarunGothic', 'NanumGothic', sans-serif !important;}/*(디폴트)기본폰트설정*/
 #cocoback p {position:relative; color:#fff; font-size: 16px;}/*(디폴트)기본 글자색*/
 
 
@@ -19,7 +19,7 @@ body {margin:0; padding:0;}
 
 .ccb-player { position:relative; padding: 11px 15px 11px 65px!important; line-height: 1.9!important; letter-spacing: -0.01em; border-top: 1px solid rgba(255,255,255,0.12); margin:0; }/*(디폴트)발언 기본 설정*/
 
-.ccb-player b { display: block; line-height: 1; font-size: 0.98em; margin-bottom: 5px; color:#888888; } /*(디폴트)발언자 이름 설정*/
+.ccb-player b { display: block; line-height: 1; font-size: 14px; margin-bottom: 5px; color:#888888; } /*(디폴트)발언자 이름 설정*/
 .ccb-player:after {display: none; width:40px; height:40px; position:absolute; top:20px; left:15px; background-size: cover; background-color: rgba(0,0,0,0.2); } /*(디폴트)발언자 두상 설정*/
 
 /*==(디폴트)탭 기본 설정==*/
@@ -42,7 +42,7 @@ body {margin:0; padding:0;}
 .tabSecret .ccb-tabtitle + .ccb-player {border-top: 0;}
 
 /*==(디폴트)잡담 탭 설정==*/
-#cocoback .tabTalk p { font-size: 0.85em; } 
+#cocoback .tabTalk p { font-size: 14px; } 
 .tabTalk { background: #424242; } 
 .tabTalk .ccb-player b { font-size:13px; color:#999!important; display:inline; margin-right: 10px;}
 .tabTalk .continued-line b {display:inline!important; visibility: hidden;}
@@ -54,7 +54,7 @@ body {margin:0; padding:0;}
 .tabMain .p_c_gmdesc { padding: 11px 15px 11px 15px!important; min-height: unset; text-align:center; background: #5b5b5b; } 
 
 /*==(디폴트)시스템 발언 설정==*/
-#cocoback .p_system { text-align:center; font-size: 0.85em!important; color: #ddd; padding-left: 15px!important; display: flex; flex-direction: column; align-items: center;} 
+#cocoback .p_system { text-align:center; font-size: 13px!important; color: #ddd; padding-left: 15px!important; display: flex; flex-direction: column; align-items: center;} 
 #cocoback .p_system b { color:#fff!important; background:#999; width: fit-content; padding: 0 10px; margin-bottom: 10px; border-radius:25px;}
 
 /*==(디폴트)우측상단 탭버튼 설정==*/
@@ -62,7 +62,7 @@ body {margin:0; padding:0;}
 #tabToggleButtons { display: flex; gap: 5px; }
 .ccbtoggle { cursor: pointer; font-size: 12px; display: flex; align-items: center; background: #333; padding: 5px 7px; border-radius: 20px; color:#fff; accent-color:#ae70ff; } /*(디폴트)우측상단 탭버튼*/
 
-span.dice-line { background-color: #111; font-size: 0.85em; padding: 5px 20px; border-radius: 5px; border: 2px solid rgba(255, 255, 255, 0.3); display: inline-block; margin: 5px 0; } /*주사위*/
+span.dice-line { background-color: #111; font-size: 13px; padding: 5px 20px; border-radius: 5px; border: 2px solid rgba(255, 255, 255, 0.3); display: inline-block; margin: 5px 0; } /*주사위*/
 
 /*==(디폴트)연속 발언 처리==*/
 .continued-line b, .continued-line:after { display: none!important; }
