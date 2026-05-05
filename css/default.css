@@ -66,4 +66,4 @@ span.dice-line { background-color: #111; font-size: 0.85em; padding: 5px 20px; b
 
 /*==연속 발언 처리==*/
 .continued-line b, .continued-line:after { display: none!important; }
-#cocoback .continued-line { margin-top: -12px!important; border-top: none!important; min-height: unset!important;}
+#cocoback .continued-line { margin-top: -12px!important; padding-top: 0px !important; border-top: none!important; min-height: unset!important;}
