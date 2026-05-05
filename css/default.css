@@ -23,7 +23,7 @@ body {margin:0; padding:0;}
 .ccb-player:after {display: none; width:40px; height:40px; position:absolute; top:20px; left:15px; background-size: cover; background-color: rgba(0,0,0,0.2); } /*(디폴트)발언자 두상 설정*/
 
 /*==(디폴트)탭 기본 설정==*/
-.ccb-tab {position: relative; overflow: hidden; margin:0; background: #666;}
+.ccb-tab {position: relative; overflow: hidden; margin:0; padding:0; background: #666;}
 .ccb-tabtitle {position: absolute; left: 10px; top: 10px; z-index: 1; padding: 7px; border-radius: 5px; background: #ffffff; font-size: 12px; font-weight: bold; color: #333; max-width: 23px; overflow: hidden;}
 .tabMain .ccb-tabtitle, .tabTalk .ccb-tabtitle {display:none;}
 
