@@ -4,7 +4,7 @@
     font-weight: normal;
     font-display: swap;
 }
-#cocoback {font-family: 'ChosunIlboMyungjo', 'Noto Serif KR', 'Nanum Myeongjo', serif;} /*기본폰트설정*/
+body #cocoback, body #cocoback * {font-family: 'ChosunIlboMyungjo', 'Noto Serif KR', 'Nanum Myeongjo', serif !important;} /*기본폰트설정*/
 #cocoback p {color:#000000;} /*기본 글자색*/
 
 
