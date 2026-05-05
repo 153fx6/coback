@@ -50,5 +50,5 @@
 span.dice-line { background: #fef68e; border: 2px solid #b31515; padding: 0px 9px;} /*주사위*/
 
 /*==연속 발언 처리==*/
-#cocoback .continued-line { margin-top: -5px!important; }
+#cocoback .continued-line { margin-top: -5px!important; padding-top: 3px !important; }
 
