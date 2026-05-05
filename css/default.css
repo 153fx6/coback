@@ -5,7 +5,8 @@
     font-display: swap;
 }	
 body {margin:0; padding:0;}
-body #cocoback, body #cocoback * {position:relative; line-height: 1; font-family: 'Pretendard', 'NanumBarunGothic', 'NanumGothic', sans-serif !important;}/*(디폴트)기본폰트설정*/
+#cocoback {position:relative; }
+body #cocoback, body #cocoback * {line-height: 1; font-family: 'Pretendard', 'NanumBarunGothic', 'NanumGothic', sans-serif !important;}/*(디폴트)기본폰트설정*/
 #cocoback p {position:relative; color:#fff; font-size: 16px;}/*(디폴트)기본 글자색*/
 
 
