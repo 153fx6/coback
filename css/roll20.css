@@ -30,7 +30,7 @@
 /*==비밀 탭 설정==*/
 .tabSecret {border-left: 10px solid #fff082; border-top: 1px solid #fff082; background: #fffcdb;}
 .tabSecret .ccb-tabtitle { background: #fff082;} 
-.tabSecret .ccb-tabtitle + .player {border-top: 0!important;}
+.tabSecret .ccb-tabtitle + .ccb-player {border-top: 0!important;}
 .tabSecret .ccb-player b { color:#653e10!important;}
 
 /*==잡담 탭 설정==*/
