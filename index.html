@@ -66,8 +66,9 @@
 			<p class="ccbinfo-sub">* 중복된 이름의 캐릭터는 마지막에 설정된 정보가 우선 적용됩니다.</p>
         <div id="char_list">
             <div class="char-row">
+					 <img src="" class="c_thumb" onerror="this.style.display='none'" onload="this.style.display='block'">
                 <input type="text" class="c_name" placeholder="캐릭터명">
-                <input type="text" class="c_img" placeholder="두상 주소">
+                <input type="text" class="c_img" placeholder="두상 주소" oninput="updateThumbnail(this)">
                 <div class="color-group">
                     <input type="color" value="#ffffff" oninput="this.nextElementSibling.value = this.value">
                     <input type="text" class="c_color" placeholder="지정색(#HEX)" oninput="this.previousElementSibling.value = this.value">
