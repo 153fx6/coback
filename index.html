@@ -6,22 +6,38 @@
     <title>🐔코백변환기</title>
     <style>
         body { font-family: 'Malgun Gothic', sans-serif; background: #333; color: white; padding: 20px; }
+		
         .container { max-width: 800px; margin: 0 auto; background: #585858; padding: 25px; border-radius: 15px; }
+		
         section { border-bottom: 1px solid #333; padding: 15px 0; }
+		
         h1 { text-align: center; color: #fff; }
+		
         input[type="text"], input[type="file"] { width: 100%; padding: 8px; margin: 5px 0; border-radius: 4px; border: none; box-sizing: border-box; }
-        .char-row { display: grid; grid-template-columns: 1fr 1.5fr 1.2fr 0.8fr 0.5fr; gap: 8px; background: rgba(0,0,0,0.2); padding: 10px; margin-top: 10px; border-radius: 8px; align-items: center; }
+		
+        .char-row { display: grid; grid-template-columns: 41px 1fr 1.5fr 1.2fr 0.8fr 0.5fr; gap: 8px; background: rgba(0,0,0,0.2); padding: 10px; margin-top: 10px; border-radius: 8px; align-items: center; }
+		
+			.c_thumb { width: 41px; height: 41px; background: rgba(0,0,0,0.3); border-radius: 4px; object-fit: cover; border: 1px solid #777; display: none;}		
+		
         .color-group { display: flex; gap: 4px; align-items: center; }
         .color-group input[type="color"] { width: 30px; height: 30px; border: none; cursor: pointer; background: none; padding: 0; }
+		
         .btn-add { background: #333; color: white; width: 100%; cursor: pointer; padding: 8px; font-weight: bold; margin-top: 10px; border: none; border-radius: 4px; }
 		.btn-addadd { display: flex; gap: 5px; margin-top: 10px; }
+		
         .btn-convert { background: #ae70ff; color: white; width: 100%; cursor: pointer; padding: 15px; font-size: 1.1rem; font-weight: bold; margin-top: 20px; border: none; border-radius: 4px; }
+		
         .btn-copy { background: #333; color: white; width: 100%; cursor: pointer; padding: 15px; font-size: 1.1rem; font-weight: bold; margin-top: 10px; border: none; border-radius: 4px; }
+		
         .btn-del { background: #ae70ff; color: white; cursor: pointer; padding: 4px; font-size: 0.75rem; border: none; border-radius: 3px; }
+		
 		.check-group label { accent-color: #ae70ff; cursor: pointer; display: block; font-size: 0.75rem; line-height: 1.2;}
+		
 		.ccbinfotop {font-size: 14px; text-align: center; color: #dddddd; border-bottom: dotted 5px #333333; padding: 20px 0 40px;}
+		
 		.ccbinfo {font-size: 12px;}
 		.ccbinfo-sub {font-size: 11px; color: #bbb; margin-top: 5px;}
+		
 		.by {font-size: 12px; text-align: center; margin-top: 20px; color: #777;}
 		.by a:link, .by a:visited {color: #777;}
     </style>
@@ -124,6 +140,19 @@ const stylePaths = {
 	roll20: "css/roll20.css"
 };
 
+function updateThumbnail(input) {
+    const row = input.closest('.char-row');
+    const thumb = row.querySelector('.c_thumb');
+    const url = input.value.trim();
+    
+    if (url) {
+        thumb.src = url;
+    } else {
+        thumb.src = "";
+        thumb.style.display = 'none';
+    }
+}
+
 function toggleCheck(current, targetClass) {
     if (current.checked) {
         const row = current.closest('.char-row');
@@ -131,14 +160,24 @@ function toggleCheck(current, targetClass) {
     }
 }
     document.getElementById('btn_add_char').onclick = function() {
-        const div = document.createElement('div');
-        div.className = 'char-row';
-        div.innerHTML = `<input type="text" class="c_name" placeholder="캐릭터명"><input type="text" class="c_img" placeholder="두상 주소"><div class="color-group"><input type="color" value="#ffffff" oninput="this.nextElementSibling.value = this.value"><input type="text" class="c_color" placeholder="지정색(#HEX)" oninput="this.previousElementSibling.value = this.value"></div><div class="check-group">
-    <label><input type="checkbox" class="c_gm" onchange="toggleCheck(this, '.c_desc')"> GM</label>
-    <label><input type="checkbox" class="c_desc" onchange="toggleCheck(this, '.c_gm')"> 나레이션</label>
-</div><button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>`;
-        document.getElementById('char_list').appendChild(div);
-    };
+		const div = document.createElement('div');
+		div.className = 'char-row';
+		div.innerHTML = `
+			<img src="" class="c_thumb" onerror="this.style.display='none'" onload="this.style.display='block'">
+			<input type="text" class="c_name" placeholder="캐릭터명">
+			<input type="text" class="c_img" placeholder="두상 주소" oninput="updateThumbnail(this)">
+			<div class="color-group">
+				<input type="color" value="#ffffff" oninput="this.nextElementSibling.value = this.value">
+				<input type="text" class="c_color" placeholder="지정색(#HEX)" oninput="this.previousElementSibling.value = this.value">
+			</div>
+			<div class="check-group">
+				<label><input type="checkbox" class="c_gm" onchange="toggleCheck(this, '.c_desc')"> GM</label>
+				<label><input type="checkbox" class="c_desc" onchange="toggleCheck(this, '.c_gm')"> 나레이션</label>
+			</div>
+			<button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>
+		`;
+		document.getElementById('char_list').appendChild(div);
+	};
 	
 	
 	// [저장 로직] 화면의 설정을 txt 파일로 내보내기
@@ -195,7 +234,8 @@ document.getElementById('f_char_config').onchange = async function(e) {
         const div = document.createElement('div');
         div.className = 'char-row';
         div.innerHTML = `
-            <input type="text" class="c_name" placeholder="캐릭터명" value="${name}">
+            <img src="${img}" class="c_thumb" onerror="this.style.display='none'" onload="this.style.display='block'">
+				<input type="text" class="c_name" placeholder="캐릭터명" value="${name}">
             <input type="text" class="c_img" placeholder="두상 주소" value="${img}">
             <div class="color-group">
                 <input type="color" value="${color || '#ffffff'}" oninput="this.nextElementSibling.value = this.value">
