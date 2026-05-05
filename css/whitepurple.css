@@ -30,7 +30,7 @@
 .tabInfo { background: #dbdbdb; } /*정보탭 배경색*/
 
 /*==비밀 탭 설정==*/
-.tabSecret {border-left: 10px solid #ff73b9; border-top: 1px solid #ff73b996; background: #f1f1f1;}
+.tabSecret {border-left: 10px solid #ff73b9; border-top: 1px solid #ff73b996; background: #fff8fb;}
 .tabSecret .ccb-tabtitle { background: #ff73b9;} 
 .tabSecret .ccb-player b { color:#222222!important;}
 
