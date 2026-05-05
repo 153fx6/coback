@@ -10,6 +10,7 @@
 .ccb-content { background:#e1e1e1;} /*기본 배경색*/
 
 .ccb-player { padding: 7px 15px 7px 55px!important; border-top: 2px solid rgba(0, 0, 0, 0.05); } /*발언 기본 설정*/
+.tt_article_useless_p_margin p {padding-top: 7px !important; padding-bottom: 7px !important;} /*티스토리깨짐방지*/
 
 .ccb-player b { display: inline; margin-bottom: unset; margin-right: 5px; color:#000000; } /*발언자 이름 설정*/
 .ccb-player:after {display: none; width:30px; height:30px; top:7px;   background-color: rgba(0,0,0,0.2); } /*발언자 두상*/
