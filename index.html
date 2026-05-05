@@ -19,6 +19,7 @@
         .btn-copy { background: #333; color: white; width: 100%; cursor: pointer; padding: 15px; font-size: 1.1rem; font-weight: bold; margin-top: 10px; border: none; border-radius: 4px; }
         .btn-del { background: #ae70ff; color: white; cursor: pointer; padding: 4px; font-size: 0.75rem; border: none; border-radius: 3px; }
 		.check-group label { accent-color: #ae70ff; cursor: pointer; display: block; font-size: 0.75rem; line-height: 1.2;}
+		.ccbinfotop {font-size: 14px; text-align: center; color: #dddddd; border-bottom: dotted 5px #333333; padding: 20px 0 40px;}
 		.ccbinfo {font-size: 12px;}
 		.ccbinfo-sub {font-size: 11px; color: #bbb; margin-top: 5px;}
 		.by {font-size: 12px; text-align: center; margin-top: 20px; color: #777;}
@@ -29,7 +30,7 @@
 
 <div class="container">
     <h1>🐔코코포 백업용 로그서식 변환기</h1>
-			<p class="ccbinfo">코코포리아에서 출력한 html로그 파일에만 대응합니다.<br>
+			<p class="ccbinfotop">코코포리아에서 출력한 html로그 파일에만 대응합니다.<br>
 			3번 필수 입력 사항을 제외한 항목은 모두 선택사항이므로 비워두셔도 작동합니다
 			<br>
 			자세한 사용법 안내는 하단의 배포링크를 확인해주세요.
@@ -73,12 +74,12 @@
     </section>
  
 	<section>
-		<h2>3. 파일 로드<span style="color:#ff9c9c">*</span></h2>
+		<h2>3. 채팅로그 파일 불러오기<span style="color:#ff9c9c">*</span></h2>
 		<p class="ccbinfo">다중파일 업로드 시 중복되는 내용을 이어붙여 하나의 파일로 병합합니다.<br>
 		파일을 드래그하여 병합 순서를 변경할 수 있습니다.</p>
 		
 		<div id="drop_zone" style="border: 2px dashed #aaa; border-radius: 10px; padding: 30px; text-align: center; background: rgba(255,255,255,0.05); cursor: pointer;">
-			<p style="margin: 0; color: #ccc;">로그 파일을 이곳에 드래그하거나 클릭하세요.</p>
+			<p style="margin: 0; color: #ccc;">채팅로그 파일을 이곳에 드래그하거나 클릭하세요.</p>
 		</div>
 
 		<!-- 파일 순서 조절 리스트 -->
@@ -88,7 +89,7 @@
 	</section>
 	
 	<section>
-    <h2>4. 스타일 설정</h2>
+    <h2>4. 디자인 설정</h2>
 			<p class="ccbinfo">로그 스타일을 선택할 수 있습니다.</p>
 			<p class="ccbinfo-sub">* 커스텀 파일(css) 다운로드는 하단의 배포링크 참고.</p>
     <div style="margin-bottom: 10px;">
