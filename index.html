@@ -238,7 +238,7 @@ document.getElementById('f_char_config').onchange = async function(e) {
         div.innerHTML = `
 				<input type="text" class="c_name" placeholder="캐릭터명" value="${name}">
 				<img src="${img}" class="c_thumb" onerror="this.style.opacity='0'" onload="this.style.opacity='1'">
-            <input type="text" class="c_img" placeholder="두상 주소" value="${img}">
+            <input type="text" class="c_img" placeholder="두상 주소" value="${img}" value="${img}" oninput="updateThumbnail(this)">>
             <div class="color-group">
                 <input type="color" value="${color || '#ffffff'}" oninput="this.nextElementSibling.value = this.value">
                 <input type="text" class="c_color" placeholder="지정색(#HEX)" value="${color}" oninput="this.previousElementSibling.value = this.value">
