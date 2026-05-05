@@ -47,7 +47,7 @@
 
 .ccbtoggle { background: #e1e1e1; color:#000000; accent-color:#0071cc; } /*우측상단 탭버튼*/
 
-span.dice-line { background: #fef68e; border: 2px solid #b31515; padding: 0px 9px;} /*주사위*/
+span.dice-line { background: #fef68e; border: 2px solid #b31515; padding: 4.5px 9px;} /*주사위*/
 
 /*==연속 발언 처리==*/
 #cocoback .continued-line { margin-top: -5px!important; padding-top: 3px !important; }
