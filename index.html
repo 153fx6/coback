@@ -327,7 +327,7 @@ document.getElementById('f_all_config').onchange = async function(e) {
     // --- 2. 캐릭터 설정 복구 ---
     const charList = document.getElementById('char_list');
     charList.innerHTML = ""; 
-    const charEntries = (sections[2] || "").trim().split(';');
+    const charEntries = (sections[2] || "").replace(/^\s+|\s+$/g, '').split(';');
     charEntries.forEach(entry => {
     if (!entry.trim()) return;
     const [name, img, color, attr] = entry.split(',');
