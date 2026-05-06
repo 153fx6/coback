@@ -277,14 +277,14 @@ document.getElementById('btn_save_all').onclick = function() {
     output += "%set2%\n";
     document.querySelectorAll('.char-row').forEach(row => {
         const name = row.querySelector('.c_name').value; 
-			const img = row.querySelector('.c_img').value.trim();
-			const color = row.querySelector('.c_color').value.trim();
-			const attr = row.querySelector('.c_gm').checked ? "GM" : (row.querySelector('.c_desc').checked ? "DESC" : "");
+        const img = row.querySelector('.c_img').value.trim();
+        const color = row.querySelector('.c_color').value.trim();
+        const attr = row.querySelector('.c_gm').checked ? "GM" : (row.querySelector('.c_desc').checked ? "DESC" : "");
 
-			if (img !== "" || color !== "") {
-				output += `${name},${img},${color},${attr};\n`;
-			}
-		});
+        if (img !== "" || color !== "") {
+            output += `${name},${img},${color},${attr};\n`;
+        }
+    });
 
     output += "%set3%\n";
     // 기본 탭 3종
@@ -358,29 +358,31 @@ document.getElementById('f_all_config').onchange = async function(e) {
     tabEntries.forEach(entry => {
         if (!entry.trim()) return;
         const data = entry.split(',');
-        const tName = data[0];
+        const tName = data[0].trim(); 
         const tOn = data[1];
 
-        if (["메인", "정보", "잡담"].includes(tName)) {
+        if (tName === "메인" || tName === "정보" || tName === "잡담") {
             const targetId = tName === "메인" ? "t_main_on" : (tName === "정보" ? "t_info_on" : "t_talk_on");
-            document.getElementById(targetId).checked = (tOn === "on");
-        } else {
-            const tImgOn = data[2] || "off";
-            const tColor = data[3] || "";
-            const div = document.createElement('div');
-            div.className = 'tab-row';
-            div.innerHTML = `
-                <input type="text" class="t_name" placeholder="탭이름" value="${tName}">
-                <label class="tab-label">출력<span class="switch"><input type="checkbox" class="t_on" ${tOn === 'on' ? 'checked' : ''}><span class="slider"></span></span></label>
-                <label class="tab-label">두상<span class="switch"><input type="checkbox" class="t_img_on" ${tImgOn === 'on' ? 'checked' : ''}><span class="slider"></span></span></label>
-                <div class="color-group">
-                    <input type="color" value="${tColor || '#ffffff'}" oninput="this.nextElementSibling.value = this.value">
-                    <input type="text" class="t_color" placeholder="지정 배경색(#HEX)" value="${tColor}" oninput="this.previousElementSibling.value = this.value">
-                </div>
-                <button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>
-            `;
-            tabList.appendChild(div);
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) targetEl.checked = (tOn === "on");
+            return; 
         }
+
+        const tImgOn = data[2] || "off";
+        const tColor = data[3] || "";
+        const div = document.createElement('div');
+        div.className = 'tab-row';
+        div.innerHTML = `
+            <input type="text" class="t_name" placeholder="탭이름" value="${tName}">
+            <label class="tab-label">출력<span class="switch"><input type="checkbox" class="t_on" ${tOn === 'on' ? 'checked' : ''}><span class="slider"></span></span></label>
+            <label class="tab-label">두상<span class="switch"><input type="checkbox" class="t_img_on" ${tImgOn === 'on' ? 'checked' : ''}><span class="slider"></span></span></label>
+            <div class="color-group">
+                <input type="color" value="${tColor || '#ffffff'}" oninput="this.nextElementSibling.value = this.value">
+                <input type="text" class="t_color" placeholder="지정 배경색(#HEX)" value="${tColor}" oninput="this.previousElementSibling.value = this.value">
+            </div>
+            <button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>
+        `;
+        tabList.appendChild(div);
     });
     
     alert("전체 설정을 불러왔습니다.");
