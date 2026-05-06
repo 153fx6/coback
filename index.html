@@ -292,12 +292,13 @@ document.getElementById('btn_save_all').onclick = function() {
     output += `잡담,${document.getElementById('t_talk_on').checked ? "on" : "off"};\n`;
     // 기타 탭 설정
     document.querySelectorAll('.tab-row').forEach(row => {
-        const tName = row.querySelector('.t_name').value;
-        if(tName) {
+        const tName = row.querySelector('.t_name').value.trim();
+        
+        if(tName && !["메인", "정보", "잡담"].includes(tName)) {
             const tOn = row.querySelector('.t_on').checked ? "on" : "off";
-				const tImgOn = row.querySelector('.t_img_on').checked ? "on" : "off";
-				const tColor = row.querySelector('.t_color').value || ""; // 공란이면 빈 문자열 저장
-				output += `${tName},${tOn},${tImgOn},${tColor};\n`;
+            const tImgOn = row.querySelector('.t_img_on').checked ? "on" : "off";
+            const tColor = row.querySelector('.t_color').value || "";
+            output += `${tName},${tOn},${tImgOn},${tColor};\n`;
         }
     });
 
@@ -381,6 +382,9 @@ document.getElementById('f_all_config').onchange = async function(e) {
         tabList.appendChild(div);
         }
     });
+	
+	const tabDetails = document.querySelector('section details:last-of-type');
+    if (tabDetails) tabDetails.open = true;
     
     alert("전체 설정을 불러왔습니다.");
     this.value = "";
