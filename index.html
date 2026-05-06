@@ -712,17 +712,27 @@ async function processLogData() {
             }
         });
 
-        let topBar = `<div id="tr_top"><a href="#">${sTitle}</a><div id="tabToggleButtons">`;
-			Object.keys(tabsData).forEach(cls => {
-				if (cls === "tabMain") return;
+       let topBar = `
+			<div id="tr_top">
+				<a href="#">${sTitle}</a>
+				<div id="ccb-ui">
+					<button type="button" id="ccb-btn">View</button>
+					<div id="ccb-lst">`;
 
-				const groupName = tabsData[cls];
-				const config = tabConfigs[groupName] || { on: true }; 
-				if (config.on) {
-					topBar += `<label class="ccbtoggle">${groupName} <input type="checkbox" data-target="${cls}" checked></label>`;
-				}
-			});
-			topBar += `</div></div>`;
+		Object.keys(tabsData).forEach(cls => {
+			if (cls === "tabMain") return;
+			const groupName = tabsData[cls];
+			const config = tabConfigs[groupName] || { on: true }; 
+
+			if (config.on) {
+				topBar += `<label class="ccbtoggle">${groupName} <input type="checkbox" data-target="${cls}" checked></label>`;
+			}
+		});
+
+		topBar += `
+					</div>
+				</div>
+			</div>`;
 
         return { sTitle, sCard, sWidth, charStyles, logBaseCss: logBaseCss, userCss: finalUserCss, topBar, tabsHtml };
     } // processLogData 끝
@@ -732,7 +742,23 @@ async function processLogData() {
     document.getElementById('btn_main_convert').onclick = async function() {
         const data = await processLogData();
         if (!data) return;
-        const fullHtml = `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>${data.sTitle}</title><style>${data.logBaseCss} ${data.charStyles} ${data.userCss}</style></head><body><div id="cocoback">${data.topBar}<div class="ccb-content">${data.sCard ? `<img src="${data.sCard}" class="tcimg">` : ""}${data.tabsHtml}</div><script>document.querySelectorAll('.ccbtoggle input').forEach(i => { i.onchange = function(){ document.querySelectorAll('.'+this.dataset.target).forEach(el => el.classList.toggle('hidden-tab', !this.checked)); }; });<\/script></div></body></html>`;
+        const fullHtml = `<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"><title>${data.sTitle}</title><style>${data.logBaseCss} ${data.charStyles} ${data.userCss}</style></head><body><div id="cocoback">${data.topBar}<div class="ccb-content">${data.sCard ? `<img src="${data.sCard}" class="tcimg">` : ""}${data.tabsHtml}</div><script>
+    const ccbBtn = document.getElementById('ccb-btn');
+    const ccbLst = document.getElementById('ccb-lst');
+
+    if(ccbBtn && ccbLst) {
+        ccbBtn.onclick = function() {
+            const isShow = ccbLst.classList.toggle('show');
+            this.innerText = isShow ? 'Close' : 'View';
+        };
+    }
+
+    document.querySelectorAll('.ccbtoggle input').forEach(i => { 
+        i.onchange = function(){ 
+            document.querySelectorAll('.'+this.dataset.target).forEach(el => el.classList.toggle('hidden-tab', !this.checked)); 
+        }; 
+    });
+<\/script></div></body></html>`;
         const a = document.createElement('a');
         a.href = URL.createObjectURL(new Blob([fullHtml], { type: 'text/html' }));
         a.download = `${data.sTitle}.html`; a.click();
