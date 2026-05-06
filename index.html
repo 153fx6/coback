@@ -311,7 +311,9 @@ document.getElementById('btn_save_all').onclick = function() {
 };
 
 // 통합 불러오기
-document.getElementById('btn_load_all').onclick = () => document.getElementById('document.getElementById('f_all_config').onchange = async function(e) {
+document.getElementById('btn_load_all').onclick = () => document.getElementById('f_all_config').click();
+
+document.getElementById('f_all_config').onchange = async function(e) {
     if (!e.target.files.length) return;
     const text = await e.target.files[0].text();
     const sections = text.split(/%set\d%/);
