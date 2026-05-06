@@ -647,17 +647,29 @@ async function processLogData() {
                 if (!tabsData[currentTabClass]) tabsData[currentTabClass] = groupName;
 
                 if (!finalCharMap[name]) {
-                    if (name.toLowerCase() === 'system') {
-                        finalCharMap[name] = { pClass: "system", color: "" };
-                    } else if (setup.isGm || setup.isDesc) {
-                        finalCharMap[name] = { pClass: setup.isGm ? "c_gm" : "c_gmdesc", color: setup.userColor || "" };
-                    } else {
-                        const pClass = 'c' + (charCounter++);
-                        let finalColor = setup.userColor || lastDetectedColor[name] || "";
-                        finalCharMap[name] = { pClass: pClass, color: finalColor };
-                        if (setup.img) charStyles += `.p_${pClass}:after { content:''; background-image: url('${setup.img}') !important; }\n`;
-                        if (finalColor) charStyles += `.p_${pClass} b { color: ${finalColor} !important; }\n`;
-                    }
+						 if (name.toLowerCase() === 'system') {
+							finalCharMap[name] = { pClass: "system", color: "" };
+						} else {
+							// 1. 클래스 결정 (GM/나레이션 여부에 따라 클래스명 부여)
+							let pClass = "";
+							if (setup.isGm || setup.isDesc) {
+								pClass = setup.isGm ? "c_gm" : "c_gmdesc";
+							} else {
+								pClass = 'c' + (charCounter++);
+							}
+
+							// 2. 데이터 저장
+							let finalColor = setup.userColor || lastDetectedColor[name] || "";
+							finalCharMap[name] = { pClass: pClass, color: finalColor };
+
+							// 3. [핵심] 속성과 관계없이 이미지나 컬러 설정이 있다면 CSS 생성
+							if (setup.img) {
+								charStyles += `.p_${pClass}:after { content:''; background-image: url('${setup.img}') !important; }\n`;
+							}
+							if (finalColor) {
+								charStyles += `.p_${pClass} b { color: ${finalColor} !important; }\n`;
+							}
+						}                   
                 }
 
                 const isTabChanged = (currentTabClass !== lastTabClass) || (currentTabClass === "tabSecret" && currentSecretKey !== lastSecretKey);
