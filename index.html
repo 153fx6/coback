@@ -646,31 +646,35 @@ async function processLogData() {
                 
                 if (!tabsData[currentTabClass]) tabsData[currentTabClass] = groupName;
 
-                if (!finalCharMap[name]) {
-						 if (name.toLowerCase() === 'system') {
+                // 1. 캐릭터 고유 정보 생성 및 매핑
+					if (!finalCharMap[name]) {
+						if (name.toLowerCase() === 'system') {
 							finalCharMap[name] = { pClass: "system", color: "" };
 						} else {
-							// 1. 클래스 결정 (GM/나레이션 여부에 따라 클래스명 부여)
-							let pClass = "";
-							if (setup.isGm || setup.isDesc) {
-								pClass = setup.isGm ? "c_gm" : "c_gmdesc";
-							} else {
-								pClass = 'c' + (charCounter++);
-							}
+							// 모든 캐릭터(GM/나레이션 포함)에게 고유 번호 기반 클래스 부여
+							const pNumClass = 'c' + (charCounter++); 
+							
+							// GM/나레이션 여부에 따른 공통 스타일용 클래스 결정
+							let commonClass = "";
+							if (setup.isGm) commonClass = "c_gm";
+							else if (setup.isDesc) commonClass = "c_gmdesc";
 
-							// 2. 데이터 저장
+							// 데이터 저장 (고유 클래스와 공통 클래스를 합쳐서 저장)
 							let finalColor = setup.userColor || lastDetectedColor[name] || "";
-							finalCharMap[name] = { pClass: pClass, color: finalColor };
+							finalCharMap[name] = { 
+								pClass: pNumClass + (commonClass ? " " + commonClass : ""), 
+								color: finalColor 
+							};
 
-							// 3. [핵심] 속성과 관계없이 이미지나 컬러 설정이 있다면 CSS 생성
+							// 속성과 관계없이 고유 번호 클래스에 이미지와 컬러 할당
 							if (setup.img) {
-								charStyles += `.p_${pClass}:after { content:''; background-image: url('${setup.img}') !important; }\n`;
+								charStyles += `.p_${pNumClass}:after { content:''; background-image: url('${setup.img}') !important; }\n`;
 							}
 							if (finalColor) {
-								charStyles += `.p_${pClass} b { color: ${finalColor} !important; }\n`;
+								charStyles += `.p_${pNumClass} b { color: ${finalColor} !important; }\n`;
 							}
-						}                   
-                }
+						}
+					}
 
                 const isTabChanged = (currentTabClass !== lastTabClass) || (currentTabClass === "tabSecret" && currentSecretKey !== lastSecretKey);
 
