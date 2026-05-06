@@ -276,12 +276,19 @@ document.getElementById('btn_save_all').onclick = function() {
 
     output += "%set2%\n";
     document.querySelectorAll('.char-row').forEach(row => {
-        const name = row.querySelector('.c_name').value; 
+        const name = row.querySelector('.c_name').value;
         const img = row.querySelector('.c_img').value.trim();
         const color = row.querySelector('.c_color').value.trim();
-        const attr = row.querySelector('.c_gm').checked ? "GM" : (row.querySelector('.c_desc').checked ? "DESC" : "");
+        const isGm = row.querySelector('.c_gm').checked;
+        const isDesc = row.querySelector('.c_desc').checked;
 
-        if (img !== "" || color !== "") {
+        const hasData = (img !== "" || color !== "" || isGm || isDesc);
+        
+        if (hasData) {
+            let attr = "";
+            if (isGm) attr = "GM";
+            else if (isDesc) attr = "DESC";
+            
             output += `${name},${img},${color},${attr};\n`;
         }
     });
