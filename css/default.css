@@ -32,8 +32,6 @@ body #cocoback, body #cocoback * {line-height: 1; font-family: 'Pretendard', 'Na
 
 /*(디폴트)두상있는 발언*/
 .show-img .ccb-player {min-height: 50px; padding: 20px 15px 11px 65px!important;}
-/*.tabMain .ccb-player {min-height: 50px; padding: 20px 15px 11px 65px!important;}
-.tabMain .ccb-player:after {display: block;}*/
 .show-img .ccb-player:after { display: block; }
 
 .tabMain { background: #2c2c2c; } /*(디폴트)메인탭 배경색*/
@@ -55,6 +53,7 @@ body #cocoback, body #cocoback * {line-height: 1; font-family: 'Pretendard', 'Na
 
 /*== (디폴트)gm,나레이션 발언 설정==*/
 .tabMain .p_c_gm b, .tabMain .p_c_gmdesc b, .tabInfo .p_c_gm b, .tabInfo .p_c_gmdesc b { display:none; } 
+.tabMain .p_c_gm :after, .tabMain .p_c_gmdesc :after { display:none; } 
 .tabMain .p_c_gm { padding: 11px 15px 11px 65px!important; min-height: unset; background: #333; } 
 .tabMain .p_c_gmdesc { padding: 11px 15px 11px 15px!important; min-height: unset; text-align:center; background: #5b5b5b; } 
 
@@ -70,19 +69,14 @@ span.dice-line { background-color: #111; font-size: 13px; line-height: 1.4!impor
 #cocoback .continued-line { margin-top: -9px!important; padding-top: 5px !important; border-top: none!important; min-height: unset!important;}
 
 
-/*==(디폴트)우측상단 탭버튼 설정==
-.hidden-tab { display: none !important; } 
-#tabToggleButtons { display: flex; gap: 5px; }
-.ccbtoggle { cursor: pointer; font-size: 12px; display: flex; align-items: center; background: #333; padding: 5px 7px; border-radius: 20px; color:#fff; accent-color:#ae70ff; } /*(디폴트)우측상단 탭버튼*/
-
 /* ==(디폴트)탭 조작==*/
 #ccb-ui { position: relative; display: inline-block; margin-left: 10px; }
 
-#ccb-btn { background: #ae70ff; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
+#ccb-btn { background: #ae70ff; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; width: 60px;}
 
 #ccb-lst {  display: none; position: absolute; top: 35px; right: 0; background: #444; padding: 10px; border-radius: 8px; border: 1px solid #777; z-index: 1000; width: max-content; box-shadow: 0 4px 15px rgba(0,0,0,0.5);}
 
 #ccb-lst.show { display: grid; gap: 8px; }
-.ccbtoggle { display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 12px; color: #eee; }
+.ccbtoggle { display: flex; align-items: center; gap: 3px; cursor: pointer; font-size: 12px; color: #eee; }
 .ccbtoggle input { accent-color: #ae70ff; cursor: pointer; }
 .hidden-tab { display: none !important; }
