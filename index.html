@@ -571,8 +571,8 @@ async function processLogData() {
 		
 		const tabConfigs = {
             "메인": { on: document.getElementById('t_main_on').checked, img: true, color: "" },
-            "정보": { on: document.getElementById('t_info_on').checked, img: true, color: "" },
-            "잡담": { on: document.getElementById('t_talk_on').checked, img: true, color: "" }
+            "정보": { on: document.getElementById('t_info_on').checked, img: false, color: "" },
+            "잡담": { on: document.getElementById('t_talk_on').checked, img: false, color: "" }
         };
 
         document.querySelectorAll('.tab-row').forEach(row => {
@@ -654,7 +654,7 @@ async function processLogData() {
                     
                     const config = tabConfigs[groupName] || { on: true, img: false, color: "" };
 
-                    // 출력 Off된 탭은 내용을 생성하지 않고 건너뜁니다.
+                    // 출력 Off된 탭은 내용을 생성하지 않고 건너뜀
                     if (!config.on) {
                         lastTabClass = ""; 
                         return; 
@@ -662,7 +662,7 @@ async function processLogData() {
 
                     if (!tabsData[currentTabClass]) tabsData[currentTabClass] = groupName;
 
-                    // 두상 On 상태라면 'show-img' 클래스를 부여합니다.
+                    // 두상 On 상태라면 'show-img' 클래스를 부여
                     const imgClass = config.img ? "show-img" : "";
 
                     tabsHtml += `<div class="ccb-tab ${currentTabClass} ${imgClass}"><div class="ccb-tabtitle">${displayTitle}</div>`;
