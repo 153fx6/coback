@@ -26,11 +26,14 @@ body #cocoback, body #cocoback * {line-height: 1; font-family: 'Pretendard', 'Na
 /*==(디폴트)탭 기본 설정==*/
 .ccb-tab {position: relative; overflow: hidden; margin:0; padding:0; background: #666;}
 .ccb-tabtitle {position: absolute; left: 10px; top: 10px; z-index: 1; padding: 7px; border-radius: 5px; background: #ffffff; font-size: 12px; font-weight: bold; color: #333; max-width: 23px; overflow: hidden;}
+.show-img .ccb-tabtitle {padding: 5px 15px; font-size: 12px; width: fit-content; max-width: none; margin-bottom: 9px; position: relative;}
+.show-img .ccb-tabtitle + .ccb-player {border-top: 0;}
 .tabMain .ccb-tabtitle, .tabTalk .ccb-tabtitle {display:none;}
 
-/*(디폴트)메인탭 발언*/
-.tabMain .ccb-player {min-height: 50px; padding: 20px 15px 11px 65px!important;}
-.tabMain .ccb-player:after {display: block;}
+/*(디폴트)두상탭 발언*/
+.show-img .ccb-player {min-height: 50px; padding: 20px 15px 11px 65px!important;}
+/*.tabMain .ccb-player {min-height: 50px; padding: 20px 15px 11px 65px!important;}
+.tabMain .ccb-player:after {display: block;}*/
 .show-img .ccb-player:after { display: block; }
 
 .tabMain { background: #2c2c2c; } /*(디폴트)메인탭 배경색*/
