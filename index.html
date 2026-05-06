@@ -780,7 +780,23 @@ ${data.charStyles} ${data.userCss}
 	
 	#tr_top {position:absolute!important; margin: 0!important;}
 
-</style><div id="cocoback">${data.topBar}<div class="ccb-content">${data.sCard ? `<div class="titlecard"><img src="${data.sCard}" class="tcimg"></div>` : ""}${data.tabsHtml}</div><script>document.querySelectorAll('.ccbtoggle input').forEach(i => { i.onchange = function(){ document.querySelectorAll('.'+this.dataset.target).forEach(el => el.classList.toggle('hidden-tab', !this.checked)); }; });<\/script>`;
+</style><div id="cocoback">${data.topBar}<div class="ccb-content">${data.sCard ? `<div class="titlecard"><img src="${data.sCard}" class="tcimg"></div>` : ""}${data.tabsHtml}</div><script>
+    const ccbBtn = document.getElementById('ccb-btn');
+    const ccbLst = document.getElementById('ccb-lst');
+
+    if(ccbBtn && ccbLst) {
+        ccbBtn.onclick = function() {
+            const isShow = ccbLst.classList.toggle('show');
+            this.innerText = isShow ? 'Close' : 'View';
+        };
+    }
+
+    document.querySelectorAll('.ccbtoggle input').forEach(i => { 
+        i.onchange = function(){ 
+            document.querySelectorAll('.'+this.dataset.target).forEach(el => el.classList.toggle('hidden-tab', !this.checked)); 
+        }; 
+    });
+<\/script>`;
         navigator.clipboard.writeText(tistoryHtml).then(() => { alert("티스토리/게시판용 HTML 코드가 복사되었습니다."); });
     };
 </script></div>
