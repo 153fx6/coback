@@ -714,28 +714,31 @@ async function processLogData() {
 
 
 
-       const activeTabs = Object.keys(tabsData).filter(cls => {
-			if (cls === "tabMain") return false; 
-			const groupName = tabsData[cls];
-			const config = tabConfigs[groupName] || { on: true };
-			return config.on; 
-		});
+       // 탭뷰버튼
+const visibleAllTabs = Object.keys(tabsData).filter(cls => {
+    const groupName = tabsData[cls];
+    const config = tabConfigs[groupName] || { on: true };
+    return config.on; 
+});
 
-		let topBar = `<div id="tr_top"><a href="#">${sTitle}</a>`;
+// 2. 상단바 기본 제목 부분 생성
+let topBar = `<div id="tr_top"><a href="#">${sTitle}</a>`;
 
-		if (activeTabs.length > 0) {
-			topBar += `<div id="ccb-ui"><button type="button" id="ccb-btn">View</button><div id="ccb-lst">`;
-			
-			activeTabs.forEach(cls => {
-				const groupName = tabsData[cls];
-				topBar += `<label class="ccbtoggle">${groupName} <input type="checkbox" data-target="${cls}" checked></label>`;
-			});
+// 3. [조건 수정] 출력되는 전체 탭이 2개 이상일 때만 View 버튼 UI를 생성합니다.
+if (visibleAllTabs.length > 1) {
+    topBar += `<div id="ccb-ui"><button type="button" id="ccb-btn">View</button><div id="ccb-lst">`;
+    
+    // 리스트 안에는 '메인'을 제외한 나머지 서브 탭들만 체크박스로 넣어줍니다.
+    visibleAllTabs.forEach(cls => {
+        if (cls === "tabMain") return; // 메인은 체크박스 목록에서 제외
+        const groupName = tabsData[cls];
+        topBar += `<label class="ccbtoggle">${groupName} <input type="checkbox" data-target="${cls}" checked></label>`;
+    });
 
-			topBar += `</div></div>`; 
-		} else {
-		}
+    topBar += `</div></div>`; 
+}
 
-		topBar += `</div>`;
+topBar += `</div>`; // 탭뷰버튼끝
 		
 		
 
