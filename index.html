@@ -56,6 +56,9 @@
 		.tab-default-group { display: flex; gap: 15px; background: rgba(0,0,0,0.1); padding: 10px; border-radius: 8px; margin-bottom: 10px; }
 		.tab-label { font-size: 12px; display: flex; align-items: center; gap: 5px; }
 		
+		details[open] summary small { display: none; }
+		summary::-webkit-details-marker { display: none; }
+		
 @media screen and (max-width: 768px) {
     .char-row {display: flex; flex-wrap: wrap;}
 
@@ -112,7 +115,10 @@
     </section>
 	
 	<section>
-    <h2>3. 탭 설정</h2>
+<details>	
+	<summary style="cursor: pointer; list-style: none; outline: none;">
+            <h2 style="display: inline-block; margin: 0;">3. 탭 설정 <small style="font-size: 0.6em; color: #aaa;">▼ 펼치기</small></h2>
+	</summary>
     <p class="ccbinfo">기본탭 출력 여부 설정 (사용하지 않은 탭은 자동으로 off됩니다.)</p>
     <div class="tab-default-group">
         <label class="tab-label">메인 <span class="switch"><input type="checkbox" id="t_main_on" checked><span class="slider"></span></span></label>
@@ -120,12 +126,13 @@
         <label class="tab-label">잡담 <span class="switch"><input type="checkbox" id="t_talk_on" checked><span class="slider"></span></span></label>
     </div>
 
-    <h3>기타탭 추가 설정</h3>
+    <h4>기타탭 추가 설정</h4>
 			<p class="ccbinfo">기타탭 설정을 추가로 지정할 경우에만 입력.</p>
 			<p class="ccbinfo-sub">* 지정하지 않으면 기본 양식으로 출력됩니다.</p>
     <div id="tab_list">
     </div>
     <button type="button" class="btn-add" id="btn_add_tab">+ 기타 탭 추가</button>
+</details>	
 	</section>
 
 	<section>
