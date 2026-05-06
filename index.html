@@ -41,6 +41,17 @@
 		.by {font-size: 12px; text-align: center; margin-top: 20px; color: #777;}
 		.by a:link, .by a:visited {color: #777;}
 		
+		.switch { position: relative; display: inline-block; width: 34px; height: 20px; vertical-align: middle; }
+		.switch input { opacity: 0; width: 0; height: 0; }
+		.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 20px; }
+		.slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+		input:checked + .slider { background-color: #ae70ff; }
+		input:checked + .slider:before { transform: translateX(14px); }		
+
+		.tab-row { display: grid; grid-template-columns: 1fr 60px 60px 130px 65px; gap: 8px; background: rgba(0,0,0,0.2); padding: 10px; margin-top: 10px; border-radius: 8px; align-items: center; }
+		.tab-default-group { display: flex; gap: 15px; background: rgba(0,0,0,0.1); padding: 10px; border-radius: 8px; margin-bottom: 10px; }
+		.tab-label { font-size: 12px; display: flex; align-items: center; gap: 5px; }
+		
 @media screen and (max-width: 768px) {
     .char-row {display: flex; flex-wrap: wrap;}
 
@@ -94,14 +105,35 @@
             </div>
         </div>
         <button type="button" class="btn-add" id="btn_add_char">+ 캐릭터 추가</button>
-		
-			<div class="btn-addadd">
-				<button type="button" class="btn-add" id="btn_save_chars">💾 캐릭터 설정.txt로 저장</button>
-				<button type="button" class="btn-add" id="btn_load_chars">📂 캐릭터 설정.txt 불러오기</button>
-			</div>
-			<input type="file" id="f_char_config" accept=".txt" style="display:none;">		
-		
     </section>
+	
+	<section>
+    <h2>3. 탭 설정</h2>
+    <p class="ccbinfo">기본탭 출력 여부 설정</p>
+			<p class="ccbinfo">사용하지 않은 탭은 자동으로 off됩니다.</p>
+    <div class="tab-default-group">
+        <label class="tab-label">메인 <span class="switch"><input type="checkbox" id="t_main_on" checked><span class="slider"></span></span></label>
+        <label class="tab-label">정보 <span class="switch"><input type="checkbox" id="t_info_on" checked><span class="slider"></span></span></label>
+        <label class="tab-label">잡담 <span class="switch"><input type="checkbox" id="t_talk_on" checked><span class="slider"></span></span></label>
+    </div>
+
+    <p class="ccbinfo">기타탭 추가 설정</p>
+			<p class="ccbinfo">기타탭 설정을 추가로 지정할 경우에만 입력.</p>
+			<p class="ccbinfo-sub">* 지정하지 않으면 기본 양식으로 출력됩니다.</p>
+    <div id="tab_list">
+    </div>
+    <button type="button" class="btn-add" id="btn_add_tab">+ 기타 탭 추가</button>
+	</section>
+
+	<section>
+		<!-- 통합 저장/불러오기 버튼 -->
+		<div class="btn-addadd">
+			<button type="button" class="btn-add" id="btn_save_all">💾 전체설정 저장 (.txt)</button>
+			<button type="button" class="btn-add" id="btn_load_all">📂 전체설정 불러오기 (.txt)</button>
+		</div>
+		<input type="file" id="f_all_config" accept=".txt" style="display:none;">
+	</section>
+	
  
 	<section>
 		<h2>3. 채팅로그 파일 불러오기<span style="color:#ff9c9c">*</span></h2>
@@ -174,6 +206,8 @@ function toggleCheck(current, targetClass) {
         row.querySelector(targetClass).checked = false;
     }
 }
+
+// 캐릭터 추가
     document.getElementById('btn_add_char').onclick = function() {
 		const div = document.createElement('div');
 		div.className = 'char-row';
@@ -193,81 +227,134 @@ function toggleCheck(current, targetClass) {
 		`;
 		document.getElementById('char_list').appendChild(div);
 	};
-	
-	
-	// [저장 로직] 화면의 설정을 txt 파일로 내보내기
-document.getElementById('btn_save_chars').onclick = function() {
-    let output = "";
+
+// 기타 탭 추가
+document.getElementById('btn_add_tab').onclick = function() {
+    const div = document.createElement('div');
+    div.className = 'tab-row';
+    div.innerHTML = `
+        <input type="text" class="t_name" placeholder="탭이름">
+        <label class="tab-label">출력<span class="switch"><input type="checkbox" class="t_on" checked><span class="slider"></span></span></label>
+        <label class="tab-label">두상<span class="switch"><input type="checkbox" class="t_img_on"><span class="slider"></span></span></label>
+        <div class="color-group">
+            <input type="color" value="#444444" oninput="this.nextElementSibling.value = this.value">
+            <input type="text" class="t_color" placeholder="배경색" value="#444444" oninput="this.previousElementSibling.value = this.value">
+        </div>
+        <button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>
+    `;
+    document.getElementById('tab_list').appendChild(div);
+};
+
+// 통합 저장
+document.getElementById('btn_save_all').onclick = function() {
+    let output = "%set1%\n";
+    // 세션 설정
+    output += `${document.getElementById('s_title').value},${document.getElementById('s_card').value},${document.getElementById('s_width').value};\n`;
+
+    output += "%set2%\n";
+    // 캐릭터 설정
     document.querySelectorAll('.char-row').forEach(row => {
         const name = row.querySelector('.c_name').value;
         const img = row.querySelector('.c_img').value;
         const color = row.querySelector('.c_color').value;
-        const isGm = row.querySelector('.c_gm').checked;
-        const isDesc = row.querySelector('.c_desc').checked;
-        
-        let attr = "";
-        if (isGm) attr = "GM";
-        else if (isDesc) attr = "DESC";
-        
-        // 데이터 순서: 이름, 이미지URL, 컬러코드, 속성;
-        output += `${name},${img},${color},${attr};\n`;
+        const attr = row.querySelector('.c_gm').checked ? "GM" : (row.querySelector('.c_desc').checked ? "DESC" : "");
+        if(name) output += `${name},${img},${color},${attr};\n`;
     });
 
-    if (!output.trim()) { alert("저장할 설정이 없습니다."); return; }
+    output += "%set3%\n";
+    // 기본 탭 설정
+    output += `메인,${document.getElementById('t_main_on').checked ? "on" : "off"};\n`;
+    output += `정보,${document.getElementById('t_info_on').checked ? "on" : "off"};\n`;
+    output += `잡담,${document.getElementById('t_talk_on').checked ? "on" : "off"};\n`;
+    // 기타 탭 설정
+    document.querySelectorAll('.tab-row').forEach(row => {
+        const tName = row.querySelector('.t_name').value;
+        if(tName) {
+            output += `${tName},${row.querySelector('.t_on').checked ? "on" : "off"},${row.querySelector('.t_img_on').checked ? "on" : "off"},${row.querySelector('.t_color').value};\n`;
+        }
+    });
 
     const blob = new Blob([output], { type: 'text/plain' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = 'character_settings.txt';
+    a.download = `config_${document.getElementById('s_title').value || 'setting'}.txt`;
     a.click();
 };
 
-
-// [불러오기 로직] 
-document.getElementById('btn_load_chars').onclick = function() {
-    document.getElementById('f_char_config').click();
-};
-
-
-document.getElementById('f_char_config').onchange = async function(e) {
-    if (!e.target.files.length) return;
+// 통합 불러오기
+document.getElementById('btn_load_all').onclick = () => document.getElementById('f_all_config').click();
+document.getElementById('f_all_config').onchange = async function(e) {
     const text = await e.target.files[0].text();
+    const sections = text.split(/%set\d%/);
+    
+    // --- 1. 세션 설정 복구 (%set1%) ---
+    const sData = sections[1].trim().split(';')[0].split(',');
+    document.getElementById('s_title').value = sData[0] || "";
+    document.getElementById('s_card').value = sData[1] || "";
+    document.getElementById('s_width').value = sData[2] || "1200px";
+
+    // --- 2. 캐릭터 설정 복구 (%set2%) ---
     const charList = document.getElementById('char_list');
+    charList.innerHTML = ""; // 기존 칸들을 싹 비웁니다.
     
-    const cleanText = text.replace(/\r?\n|\r/g, ""); 
-    const entries = cleanText.split(';');
-    
-    entries.forEach(entry => {
+    const charEntries = sections[2].trim().split(';');
+    charEntries.forEach(entry => {
         if (!entry.trim()) return;
-
-        const data = entry.split(','); 
-        const name  = data[0] || "";
-        const img   = data[1] || "";
-        const color = data[2] || "";
-        const attr  = (data[3] || "");
-
+        const [name, img, color, attr] = entry.split(',');
+        
         const div = document.createElement('div');
         div.className = 'char-row';
         div.innerHTML = `
-				<input type="text" class="c_name" placeholder="캐릭터명" value="${name}">
-				<img src="${img}" class="c_thumb" onerror="this.style.opacity='0'" onload="this.style.opacity='1'">
-            <input type="text" class="c_img" placeholder="두상 주소" value="${img}" value="${img}" oninput="updateThumbnail(this)">
+            <input type="text" class="c_name" placeholder="캐릭터명" value="${name}">
+            <img src="${img}" class="c_thumb" onerror="this.style.opacity='0'" onload="this.style.opacity='1'" style="opacity: ${img ? '1' : '0'}">
+            <input type="text" class="c_img" placeholder="두상 주소" value="${img}" oninput="updateThumbnail(this)">
             <div class="color-group">
                 <input type="color" value="${color || '#ffffff'}" oninput="this.nextElementSibling.value = this.value">
                 <input type="text" class="c_color" placeholder="지정색(#HEX)" value="${color}" oninput="this.previousElementSibling.value = this.value">
             </div>
             <div class="check-group">
-                <label><input type="checkbox" class="c_gm" ${attr.trim() === 'GM' ? 'checked' : ''} onchange="toggleCheck(this, '.c_desc')"> GM</label>
-                <label><input type="checkbox" class="c_desc" ${attr.trim() === 'DESC' ? 'checked' : ''} onchange="toggleCheck(this, '.c_gm')"> 나레이션</label>
+                <label><input type="checkbox" class="c_gm" ${attr === 'GM' ? 'checked' : ''} onchange="toggleCheck(this, '.c_desc')"> GM</label>
+                <label><input type="checkbox" class="c_desc" ${attr === 'DESC' ? 'checked' : ''} onchange="toggleCheck(this, '.c_gm')"> 나레이션</label>
             </div>
             <button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>
         `;
         charList.appendChild(div);
     });
 
-    this.value = ""; 
-};
-	
+    // --- 3. 탭 설정 복구 (%set3%) ---
+    const tabList = document.getElementById('tab_list');
+    tabList.innerHTML = ""; // 기타 탭 리스트 초기화
+    const tabEntries = sections[3].trim().split(';');
+    
+    tabEntries.forEach(entry => {
+        if (!entry.trim()) return;
+        const [tName, tOn, tImgOn, tColor] = entry.split(',');
+
+        // 기본 3종 탭 처리[cite: 2]
+        if (tName === "메인") document.getElementById('t_main_on').checked = (tOn === "on");
+        else if (tName === "정보") document.getElementById('t_info_on').checked = (tOn === "on");
+        else if (tName === "잡담") document.getElementById('t_talk_on').checked = (tOn === "on");
+        else {
+            // 그 외 기타 탭들은 리스트에 새로 생성[cite: 2]
+            const div = document.createElement('div');
+            div.className = 'tab-row';
+            div.innerHTML = `
+                <input type="text" class="t_name" placeholder="탭이름" value="${tName}">
+                <label class="tab-label">출력<span class="switch"><input type="checkbox" class="t_on" ${tOn === 'on' ? 'checked' : ''}><span class="slider"></span></span></label>
+                <label class="tab-label">두상<span class="switch"><input type="checkbox" class="t_img_on" ${tImgOn === 'on' ? 'checked' : ''}><span class="slider"></span></span></label>
+                <div class="color-group">
+                    <input type="color" value="${tColor || '#444444'}" oninput="this.nextElementSibling.value = this.value">
+                    <input type="text" class="t_color" placeholder="배경색" value="${tColor}" oninput="this.previousElementSibling.value = this.value">
+                </div>
+                <button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>
+            `;
+            tabList.appendChild(div);
+        }
+    });
+    
+    alert("전체 설정을 불러왔습니다.");
+    this.value = "";
+};	
 
 //드래그앤드롭
 const dropZone = document.getElementById('drop_zone');
