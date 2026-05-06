@@ -46,13 +46,13 @@
 		.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 24px; }
 		.slider:before { position: absolute; content: "OFF"; font-size: 10px; font-weight: bold; right: 6px; top: 5px; color: #aaa; transition: .4s; }
 		.slider:after { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; z-index: 2; }
-		input:checked + .slider { background-color: #ae70ff; } input:checked + .slider:before { content: "ON"; left: 7px; right: auto; color: white; }
+		input:checked + .slider { background-color: #ae70ff; } input:checked + .slider:before { content: "ON"; left: -5px; right: auto; color: white; }
 		input:checked + .slider:after { transform: translateX(26px);}
 		
 		input:checked + .slider { background-color: #ae70ff; }
 		input:checked + .slider:before { transform: translateX(14px); }		
 
-		.tab-row { display: grid; grid-template-columns: 1fr 60px 60px 130px 65px; gap: 8px; background: rgba(0,0,0,0.2); padding: 10px; margin-top: 10px; border-radius: 8px; align-items: center; }
+		.tab-row { display: grid; grid-template-columns: 0.6fr 0.4fr 0.4fr 1fr 65px; gap: 8px; background: rgba(0,0,0,0.2); padding: 10px; margin-top: 10px; border-radius: 8px; align-items: center; }
 		.tab-default-group { display: flex; gap: 15px; background: rgba(0,0,0,0.1); padding: 10px; border-radius: 8px; margin-bottom: 10px; }
 		.tab-label { font-size: 12px; display: flex; align-items: center; gap: 5px; }
 		
@@ -241,8 +241,8 @@ document.getElementById('btn_add_tab').onclick = function() {
         <label class="tab-label">출력<span class="switch"><input type="checkbox" class="t_on" checked><span class="slider"></span></span></label>
         <label class="tab-label">두상<span class="switch"><input type="checkbox" class="t_img_on"><span class="slider"></span></span></label>
         <div class="color-group">
-            <input type="color" value="#444444" oninput="this.nextElementSibling.value = this.value">
-            <input type="text" class="t_color" placeholder="배경색(#HEX)" value="" oninput="this.previousElementSibling.value = this.value">
+            <input type="color" value="#ffffff" oninput="this.nextElementSibling.value = this.value">
+            <input type="text" class="t_color" placeholder="기타탭 지정 배경색(#HEX)" value="" oninput="this.previousElementSibling.value = this.value">
         </div>
         <button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>
     `;
@@ -350,8 +350,8 @@ document.getElementById('f_all_config').onchange = async function(e) {
 					<label class="tab-label">출력<span class="switch"><input type="checkbox" class="t_on" ${tOn === 'on' ? 'checked' : ''}><span class="slider"></span></span></label>
 					<label class="tab-label">두상<span class="switch"><input type="checkbox" class="t_img_on" ${tImgOn === 'on' ? 'checked' : ''}><span class="slider"></span></span></label>
 					<div class="color-group">
-						<input type="color" value="${tColor || '#444444'}" oninput="this.nextElementSibling.value = this.value">
-						<input type="text" class="t_color" placeholder="배경색(#HEX)" value="${tColor || ''}" oninput="this.previousElementSibling.value = this.value">
+						<input type="color" value="${tColor || '#ffffff'}" oninput="this.nextElementSibling.value = this.value">
+						<input type="text" class="t_color" placeholder="기타탭 지정 배경색(#HEX)" value="${tColor || ''}" oninput="this.previousElementSibling.value = this.value">
 					</div>
 					<button type="button" class="btn-del" onclick="this.parentElement.remove()">삭제</button>
             `;
