@@ -761,11 +761,21 @@ topBar += `</div>`; // 탭뷰버튼끝
         };
     }
 
-    document.querySelectorAll('.ccbtoggle input').forEach(i => { 
-        i.onchange = function(){ 
-            document.querySelectorAll('.'+this.dataset.target).forEach(el => el.classList.toggle('hidden-tab', !this.checked)); 
-        }; 
-    });
+    document.querySelectorAll('.ccbtoggle input').forEach(checkbox => { 
+		checkbox.onchange = function() {
+			const checkedCount = document.querySelectorAll('.ccbtoggle input:checked').length;
+			
+			if (checkedCount === 0) {
+				this.checked = true; 
+				return; 
+			}
+
+			const targetClass = this.dataset.target;
+			document.querySelectorAll('.' + targetClass).forEach(el => {
+				el.classList.toggle('hidden-tab', !this.checked);
+			});
+		}; 
+	});
 <\/script></div></body></html>`;
         const a = document.createElement('a');
         a.href = URL.createObjectURL(new Blob([fullHtml], { type: 'text/html' }));
@@ -799,11 +809,21 @@ ${data.charStyles} ${data.userCss}
         };
     }
 
-    document.querySelectorAll('.ccbtoggle input').forEach(i => { 
-        i.onchange = function(){ 
-            document.querySelectorAll('.'+this.dataset.target).forEach(el => el.classList.toggle('hidden-tab', !this.checked)); 
-        }; 
-    });
+   document.querySelectorAll('.ccbtoggle input').forEach(checkbox => { 
+		checkbox.onchange = function() {
+			const checkedCount = document.querySelectorAll('.ccbtoggle input:checked').length;
+			
+			if (checkedCount === 0) {
+				this.checked = true; 
+				return; 
+			}
+
+			const targetClass = this.dataset.target;
+			document.querySelectorAll('.' + targetClass).forEach(el => {
+				el.classList.toggle('hidden-tab', !this.checked);
+			});
+		}; 
+	});
 <\/script>`;
         navigator.clipboard.writeText(tistoryHtml).then(() => { alert("티스토리/게시판용 HTML 코드가 복사되었습니다."); });
     };
