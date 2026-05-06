@@ -713,10 +713,16 @@ async function processLogData() {
         });
 
         let topBar = `<div id="tr_top"><a href="#">${sTitle}</a><div id="tabToggleButtons">`;
-        Object.keys(tabsData).forEach(cls => {
-            if (cls !== "tabMain") topBar += `<label class="ccbtoggle">${tabsData[cls]} <input type="checkbox" data-target="${cls}" checked></label>`;
-        });
-        topBar += `</div></div>`;
+			Object.keys(tabsData).forEach(cls => {
+				if (cls === "tabMain") return;
+
+				const groupName = tabsData[cls];
+				const config = tabConfigs[groupName] || { on: true }; 
+				if (config.on) {
+					topBar += `<label class="ccbtoggle">${groupName} <input type="checkbox" data-target="${cls}" checked></label>`;
+				}
+			});
+			topBar += `</div></div>`;
 
         return { sTitle, sCard, sWidth, charStyles, logBaseCss: logBaseCss, userCss: finalUserCss, topBar, tabsHtml };
     } // processLogData 끝
