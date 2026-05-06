@@ -656,8 +656,8 @@ async function processLogData() {
 							
 							// GM/나레이션 여부에 따른 공통 스타일용 클래스 결정
 							let commonClass = "";
-							if (setup.isGm) commonClass = "c_gm";
-							else if (setup.isDesc) commonClass = "c_gmdesc";
+							if (setup.isGm) commonClass = "p_c_gm";
+							else if (setup.isDesc) commonClass = "p_c_gmdesc";
 
 							// 데이터 저장 (고유 클래스와 공통 클래스를 합쳐서 저장)
 							let finalColor = setup.userColor || lastDetectedColor[name] || "";
