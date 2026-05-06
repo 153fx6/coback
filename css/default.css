@@ -53,7 +53,7 @@ body #cocoback, body #cocoback * {line-height: 1; font-family: 'Pretendard', 'Na
 
 /*== (디폴트)gm,나레이션 발언 설정==*/
 .tabMain .p_c_gm b, .tabMain .p_c_gmdesc b, .tabInfo .p_c_gm b, .tabInfo .p_c_gmdesc b { display:none; } 
-.tabMain .p_c_gm :after, .tabMain .p_c_gmdesc :after { display:none; } 
+.tabMain .p_c_gm:after, .tabMain .p_c_gmdesc:after { display:none; } 
 .tabMain .p_c_gm { padding: 11px 15px 11px 65px!important; min-height: unset; background: #333; } 
 .tabMain .p_c_gmdesc { padding: 11px 15px 11px 15px!important; min-height: unset; text-align:center; background: #5b5b5b; } 
 
