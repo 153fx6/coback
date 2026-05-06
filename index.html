@@ -712,27 +712,30 @@ async function processLogData() {
             }
         });
 
-       let topBar = `
-			<div id="tr_top">
-				<a href="#">${sTitle}</a>
-				<div id="ccb-ui">
-					<button type="button" id="ccb-btn">View</button>
-					<div id="ccb-lst">`;
+       
+	   
+	   const allVisibleTabs = Object.keys(tabsData).filter(cls => {
+		const groupName = tabsData[cls];
+		const config = tabConfigs[groupName] || { on: true };
+		return config.on; 
+	});
 
-		Object.keys(tabsData).forEach(cls => {
-			if (cls === "tabMain") return;
+	const subTabsForView = allVisibleTabs.filter(cls => cls !== "tabMain");
+
+	let topBar = `<div id="tr_top"><a href="#">${sTitle}</a>`;
+
+	if (allVisibleTabs.length > 1) {
+		topBar += `<div id="ccb-ui"><button type="button" id="ccb-btn">View</button><div id="ccb-lst">`;
+		
+		subTabsForView.forEach(cls => {
 			const groupName = tabsData[cls];
-			const config = tabConfigs[groupName] || { on: true }; 
-
-			if (config.on) {
-				topBar += `<label class="ccbtoggle">${groupName} <input type="checkbox" data-target="${cls}" checked></label>`;
-			}
+			topBar += `<label class="ccbtoggle">${groupName} <input type="checkbox" data-target="${cls}" checked></label>`;
 		});
 
-		topBar += `
-					</div>
-				</div>
-			</div>`;
+		topBar += `</div></div>`;
+	}
+
+	topBar += `</div>`;
 
         return { sTitle, sCard, sWidth, charStyles, logBaseCss: logBaseCss, userCss: finalUserCss, topBar, tabsHtml };
     } // processLogData 끝
