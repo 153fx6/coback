@@ -9,7 +9,7 @@
 		
         .container { max-width: 800px; margin: 0 auto; background: #585858; padding: 25px; border-radius: 15px; }
 		
-        section { border-bottom: 1px solid #333; padding: 15px 0; }
+        section { border-bottom: 1px solid #333; padding: 15px 0 40px; }
 		
         h1 { text-align: center; color: #fff; }
 		
@@ -57,6 +57,7 @@
 		.tab-label { font-size: 12px; display: flex; align-items: center; gap: 5px; }
 		
 		details[open] summary small { display: none; }
+		details > div { padding-top: 10px; }
 		summary::-webkit-details-marker { display: none; }
 		
 @media screen and (max-width: 768px) {
@@ -78,7 +79,7 @@
 <div class="container">
     <h1>🐔코코포 백업용 로그서식 변환기</h1>
 			<p class="ccbinfotop">코코포리아에서 출력한 html로그 파일에만 대응합니다.<br>
-			3번의 필수 입력 사항을 제외한 항목은 모두 선택사항이므로 비워두셔도 정상작동합니다.
+			필수 입력 사항을 제외한 항목은 모두 선택사항이므로 비워두셔도 정상작동합니다.
 			<br>
 			자세한 사용법 안내는 하단의 배포링크를 확인해주세요.
 			</p>
@@ -92,7 +93,12 @@
         </div>
     </section>
     <section>
-        <h2>2. 캐릭터 설정</h2>
+ 
+<details>	
+	<summary style="cursor: pointer; list-style: none; outline: none;"> 
+		<h2 style="display: inline-block; margin: 0;">2. 캐릭터 설정  <small style="font-size: 12px; font-weight: normal; color: #aaa;">▼ 클릭하여 펼치기</small></h2>
+	</summary>	
+	<div>
 			<p class="ccbinfo">이미지나 색상을 추가로 지정할 경우에만 입력.</p>
 			<p class="ccbinfo-sub">* 중복된 이름의 캐릭터는 마지막에 설정된 정보가 우선 적용됩니다.</p>
         <div id="char_list">
@@ -112,31 +118,36 @@
             </div>
         </div>
         <button type="button" class="btn-add" id="btn_add_char">+ 캐릭터 추가</button>
+		</div>
     </section>
+</details>	
 	
 	<section>
 <details>	
 	<summary style="cursor: pointer; list-style: none; outline: none;">
-            <h2 style="display: inline-block; margin: 0;">3. 탭 설정 <small style="font-size: 0.6em; color: #aaa;">▼ 펼치기</small></h2>
+            <h2 style="display: inline-block; margin: 0;">3. 탭 설정  <small style="font-size: 12px; font-weight: normal; color: #aaa;">▼ 클릭하여 펼치기</small></h2>
 	</summary>
-    <p class="ccbinfo">기본탭 출력 여부 설정 (사용하지 않은 탭은 자동으로 off됩니다.)</p>
-    <div class="tab-default-group">
-        <label class="tab-label">메인 <span class="switch"><input type="checkbox" id="t_main_on" checked><span class="slider"></span></span></label>
-        <label class="tab-label">정보 <span class="switch"><input type="checkbox" id="t_info_on" checked><span class="slider"></span></span></label>
-        <label class="tab-label">잡담 <span class="switch"><input type="checkbox" id="t_talk_on" checked><span class="slider"></span></span></label>
-    </div>
+	<div>
+		<p class="ccbinfo">기본탭 출력 여부 설정 (사용하지 않은 탭은 자동으로 off됩니다.)</p>
+		<div class="tab-default-group">
+			<label class="tab-label">메인 <span class="switch"><input type="checkbox" id="t_main_on" checked><span class="slider"></span></span></label>
+			<label class="tab-label">정보 <span class="switch"><input type="checkbox" id="t_info_on" checked><span class="slider"></span></span></label>
+			<label class="tab-label">잡담 <span class="switch"><input type="checkbox" id="t_talk_on" checked><span class="slider"></span></span></label>
+		</div>
 
-    <h4>기타탭 추가 설정</h4>
-			<p class="ccbinfo">기타탭 설정을 추가로 지정할 경우에만 입력.</p>
-			<p class="ccbinfo-sub">* 지정하지 않으면 기본 양식으로 출력됩니다.</p>
-    <div id="tab_list">
-    </div>
-    <button type="button" class="btn-add" id="btn_add_tab">+ 기타 탭 추가</button>
+		<h3>기타탭 추가 설정</h3>
+				<p class="ccbinfo">기타탭 설정을 추가로 지정할 경우에만 입력.(지정하지 않으면 기본 양식으로 출력됩니다.)</p>
+		<div id="tab_list">
+		</div>
+		<button type="button" class="btn-add" id="btn_add_tab">+ 기타 탭 추가</button>
+	</div>
 </details>	
 	</section>
 
-	<section>
-	<h2>전체 설정 저장</h2>
+	<section style="text-align:center; padding:30px 100px;">
+
+	<div style="border-radius: 10px; background: #656565; padding: 30px;">
+		<h3 style="margin-top: 0;">📌 전체 설정 저장</h3>
 		<p class="ccbinfo">추후의 편집이나 후속 세션을 위해 현재의 설정을 txt파일로 저장할 수 있습니다.</p>
 		<!-- 통합 저장/불러오기 버튼 -->
 		<div class="btn-addadd">
@@ -144,6 +155,7 @@
 			<button type="button" class="btn-add" id="btn_load_all">📂 전체설정 불러오기 (.txt)</button>
 		</div>
 		<input type="file" id="f_all_config" accept=".txt" style="display:none;">
+	</div>
 	</section>
 	
  
@@ -555,6 +567,25 @@ async function processLogData() {
                 setupChars[name] = { userColor: color, img: img, isGm: isGm, isDesc: isDesc }; 
             }
         });
+		
+		
+		const tabConfigs = {
+            "메인": { on: document.getElementById('t_main_on').checked, img: true, color: "" },
+            "정보": { on: document.getElementById('t_info_on').checked, img: true, color: "" },
+            "잡담": { on: document.getElementById('t_talk_on').checked, img: true, color: "" }
+        };
+
+        document.querySelectorAll('.tab-row').forEach(row => {
+            const tName = row.querySelector('.t_name').value.trim();
+            if (tName) {
+                tabConfigs[tName] = {
+                    on: row.querySelector('.t_on').checked,
+                    img: row.querySelector('.t_img_on').checked,
+                    color: row.querySelector('.t_color').value.trim()
+                };
+            }
+        });
+		
 
         const lastDetectedColor = {};
         for (let i = allLines.length - 1; i >= 0; i--) {
@@ -620,8 +651,22 @@ async function processLogData() {
 
                 if (isTabChanged) {
                     if (lastTabClass !== "") tabsHtml += `</div>`;
-                    tabsHtml += `<div class="ccb-tab ${currentTabClass}"><div class="ccb-tabtitle">${displayTitle}</div>`;
-                    lastSpeaker = null; lastSecretKey = "";
+                    
+                    const config = tabConfigs[groupName] || { on: true, img: false, color: "" };
+
+                    // 출력 Off된 탭은 내용을 생성하지 않고 건너뜁니다.
+                    if (!config.on) {
+                        lastTabClass = ""; 
+                        return; 
+                    }
+
+                    if (!tabsData[currentTabClass]) tabsData[currentTabClass] = groupName;
+
+                    // 두상 On 상태라면 'show-img' 클래스를 부여합니다.
+                    const imgClass = config.img ? "show-img" : "";
+
+                    tabsHtml += `<div class="ccb-tab ${currentTabClass} ${imgClass}"><div class="ccb-tabtitle">${displayTitle}</div>`;
+                    lastSpeaker = null; lastSecretKey = currentSecretKey;
                 }
 
                 let isContinued = ((name !== "" || isRegistered) && name === lastSpeaker);
@@ -638,6 +683,21 @@ async function processLogData() {
             }
         });
         if (lastTabClass !== "") tabsHtml += `</div>`;
+		
+		Object.keys(tabConfigs).forEach(name => {
+            const conf = tabConfigs[name];
+            if (conf.color) {
+                let targetClass = "";
+                if (name === "메인") targetClass = "tabMain";
+                else if (name === "정보") targetClass = "tabInfo";
+                else if (name === "잡담") targetClass = "tabTalk";
+                else targetClass = etcMap[name];
+
+                if (targetClass) {
+                    charStyles += `.${targetClass} { background-color: ${conf.color} !important; }\n`;
+                }
+            }
+        });
 
         let topBar = `<div id="tr_top"><a href="#">${sTitle}</a><div id="tabToggleButtons">`;
         Object.keys(tabsData).forEach(cls => {
