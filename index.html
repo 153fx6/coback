@@ -761,13 +761,17 @@ topBar += `</div>`; // 탭뷰버튼끝
         };
     }
 
-    document.querySelectorAll('.ccbtoggle input').forEach(checkbox => { 
+   document.querySelectorAll('.ccbtoggle input').forEach(checkbox => { 
 		checkbox.onchange = function() {
-			const checkedCount = document.querySelectorAll('.ccbtoggle input:checked').length;
-			
-			if (checkedCount === 0) {
-				this.checked = true; 
-				return; 
+			const mainTab = document.querySelector('.tabMain');
+			const isMainOff = mainTab ? mainTab.classList.contains('hidden-tab') : true;
+
+			if (isMainOff) {
+				const checkedCount = document.querySelectorAll('.ccbtoggle input:checked').length;
+				if (checkedCount === 0) {
+					this.checked = true; 
+					return; 
+				}
 			}
 
 			const targetClass = this.dataset.target;
@@ -811,11 +815,15 @@ ${data.charStyles} ${data.userCss}
 
    document.querySelectorAll('.ccbtoggle input').forEach(checkbox => { 
 		checkbox.onchange = function() {
-			const checkedCount = document.querySelectorAll('.ccbtoggle input:checked').length;
-			
-			if (checkedCount === 0) {
-				this.checked = true; 
-				return; 
+			const mainTab = document.querySelector('.tabMain');
+			const isMainOff = mainTab ? mainTab.classList.contains('hidden-tab') : true;
+
+			if (isMainOff) {
+				const checkedCount = document.querySelectorAll('.ccbtoggle input:checked').length;
+				if (checkedCount === 0) {
+					this.checked = true; 
+					return; 
+				}
 			}
 
 			const targetClass = this.dataset.target;
