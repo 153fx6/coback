@@ -19,8 +19,7 @@
 .ccb-tab {background: #e1e1e1;}
 .ccb-tabtitle {max-height: 26px;white-space: nowrap; text-overflow: ellipsis;}
 
-/*두상있는 발언*/
-.show-img .ccb-player {min-height: 30px; padding: 7px 15px 7px 55px!important;} 
+.show-img .ccb-player {min-height: 30px; padding: 7px 15px 7px 55px!important;} /*두상있는 발언*/
 
 .tabMain { background: #f1f1f1; } /*메인탭 배경색*/
 
@@ -52,9 +51,7 @@ span.dice-line { background: #fef68e; border: 2px solid #b31515; padding: 4.5px 
 /*==연속 발언 처리==*/
 #cocoback .continued-line { margin-top: -5px!important; padding-top: 3px !important; }
 
-.ccbtoggle { background: #e1e1e1;  accent-color:#0071cc; } /*우측상단 탭버튼*/
 /* ==탭 조작==*/
-#ccb-ui { position: relative; display: inline-block; margin-left: 10px; }
 #ccb-btn { background: #0071cc; }
 #ccb-lst { background: #e1e1e1; }
 .ccbtoggle { color:#000000; }

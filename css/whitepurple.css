@@ -24,7 +24,7 @@ body #cocoback, body #cocoback * {font-family: 'ChosunIlboMyungjo', 'Noto Serif 
 .ccb-tab {background: #ffe9f3;} 
 .ccb-tabtitle { background: #ffffff;  color: #333333; }
 
-.tabMain .ccb-player {padding: 20px 15px 11px 65px!important;} /*메인탭 발언 여백*/
+.show-img .ccb-player {padding: 20px 15px 11px 65px!important;} /*두상있는 발언*/
 
 .tabMain { background: #ffffff; } /*메인탭 배경색*/
 .tabInfo { background: #dbdbdb; } /*정보탭 배경색*/
@@ -38,7 +38,6 @@ body #cocoback, body #cocoback * {font-family: 'ChosunIlboMyungjo', 'Noto Serif 
 .tabTalk { background: #e4e0f1; } 
 
 /*== gm,나레이션 발언 설정==*/
-.p_c_gm b, .p_c_gmdesc b { display:none; } 
 .tabMain .p_c_gm { padding: 11px 15px 11px 65px!important; background: #f5f4f7; } 
 .tabMain .p_c_gmdesc { padding: 11px 15px 11px 15px!important; background: #f5ecf9; } 
 
@@ -46,10 +45,13 @@ body #cocoback, body #cocoback * {font-family: 'ChosunIlboMyungjo', 'Noto Serif 
 #cocoback .p_system { color: #555555; } 
 #cocoback .p_system b { background:#ff73b9; }
 
-
-.ccbtoggle { background: #eeeeee; color:#333333; accent-color:#ff73b9; } /*우측상단 탭버튼*/
-
 span.dice-line { background: #fff3f9; border: 2px solid #ff73b9;} /*주사위*/
 
 /*==연속 발언 처리==*/
 #cocoback .continued-line { margin-top: -9px!important; padding-top: 5px !important; border-top: none!important; min-height: unset!important;}
+
+/* ==탭 조작==*/
+#ccb-btn { background: #ff73b9; }
+#ccb-lst { background: #eeeeee; }
+.ccbtoggle { color:#333333; }
+.ccbtoggle input { accent-color: #ff73b9; }
