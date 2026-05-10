@@ -199,7 +199,7 @@
     <button type="button" class="btn-convert" id="btn_main_convert">로그 변환 및 다운로드</button>
     <button type="button" class="btn-copy" id="btn_tistory_copy">티스토리/게시판용 HTML 코드 복사</button>
 </div>
-<div class="by"><p>최종 수정: 26.05.05 / 배포&사용법 <a href="https://www.postype.com/@wwwwon/post/22211812" target="_blank" alt="배포링크">(링크)</a></p></div>
+<div class="by"><p>최종 수정: 26.05.11 / 배포&사용법 <a href="https://www.postype.com/@wwwwon/post/22211812" target="_blank" alt="배포링크">(링크)</a></p></div>
 
 <script>
 
@@ -272,7 +272,10 @@ document.getElementById('btn_add_tab').onclick = function() {
 // 통합 저장
 document.getElementById('btn_save_all').onclick = function() {
     let output = "%set1%\n";
-    output += `${document.getElementById('s_title').value},${document.getElementById('s_card').value},${document.getElementById('s_width').value};\n`;
+    const sTitle = document.getElementById('s_title').value || "";
+    const sCard = document.getElementById('s_card').value || "";
+    const sWidth = document.getElementById('s_width').value || "1200px";
+    output += `${sTitle}|${sCard}|${sWidth};\n`;
 
     output += "%set2%\n";
     document.querySelectorAll('.char-row').forEach(row => {
@@ -289,15 +292,15 @@ document.getElementById('btn_save_all').onclick = function() {
             if (isGm) attr = "GM";
             else if (isDesc) attr = "DESC";
             
-            output += `${name},${img},${color},${attr};\n`;
+            output += `${name}|${img}|${color}|${attr};\n`;
         }
     });
 
     output += "%set3%\n";
     // 기본 탭 3종
-    output += `메인,${document.getElementById('t_main_on').checked ? "on" : "off"};\n`;
-    output += `정보,${document.getElementById('t_info_on').checked ? "on" : "off"};\n`;
-    output += `잡담,${document.getElementById('t_talk_on').checked ? "on" : "off"};\n`;
+    output += `메인|${document.getElementById('t_main_on').checked ? "on" : "off"};\n`;
+    output += `정보|${document.getElementById('t_info_on').checked ? "on" : "off"};\n`;
+    output += `잡담|${document.getElementById('t_talk_on').checked ? "on" : "off"};\n`;
     
     // 기타 탭 
     document.querySelectorAll('.tab-row').forEach(row => {
@@ -306,14 +309,14 @@ document.getElementById('btn_save_all').onclick = function() {
             const tOn = row.querySelector('.t_on').checked ? "on" : "off";
             const tImgOn = row.querySelector('.t_img_on').checked ? "on" : "off";
             const tColor = row.querySelector('.t_color').value.trim() || "";
-            output += `${tName},${tOn},${tImgOn},${tColor};\n`;
+            output += `${tName}|${tOn}|${tImgOn}|${tColor};\n`;
         }
     });
 
     const blob = new Blob([output], { type: 'text/plain' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `config_${document.getElementById('s_title').value || 'setting'}.txt`;
+    a.download = `코백_${document.getElementById('s_title').value || 'setting'}.txt`;
     a.click();
 };
 
@@ -326,7 +329,7 @@ document.getElementById('f_all_config').onchange = async function(e) {
     const sections = text.split(/%set\d%/);
     
     // --- 1. 세션 설정 복구 ---
-    const sData = (sections[1] || "").trim().split(';')[0].split(',');
+    const sData = (sections[1] || "").trim().split(';')[0].split('|');
     document.getElementById('s_title').value = sData[0] || "";
     document.getElementById('s_card').value = sData[1] || "";
     document.getElementById('s_width').value = sData[2] || "1200px";
@@ -337,7 +340,7 @@ document.getElementById('f_all_config').onchange = async function(e) {
     const charEntries = (sections[2] || "").replace(/^\s+|\s+$/g, '').split(';');
     charEntries.forEach(entry => {
     if (!entry.trim()) return;
-    const [name, img, color, attr] = entry.split(',');
+    const [name, img, color, attr] = entry.split('|');
     
     const div = document.createElement('div');
     div.className = 'char-row';
@@ -364,7 +367,7 @@ document.getElementById('f_all_config').onchange = async function(e) {
     const tabEntries = (sections[3] || "").trim().split(';');
     tabEntries.forEach(entry => {
         if (!entry.trim()) return;
-        const data = entry.split(',');
+        const data = entry.split('|');
         const tName = data[0].trim(); 
         const tOn = data[1];
 
