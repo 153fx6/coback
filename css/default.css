@@ -27,7 +27,7 @@ body #cocoback, body #cocoback * {line-height: 1; font-family: 'Pretendard', 'Na
 .ccb-tab {position: relative; overflow: hidden; margin:0; padding:0; background: #666;}
 .ccb-tabtitle {position: absolute; left: 10px; top: 10px; z-index: 1; padding: 7px; border-radius: 5px; background: #ffffff; font-size: 12px; font-weight: bold; color: #333; max-width: 23px; overflow: hidden;}
 .show-img .ccb-tabtitle {padding: 5px 15px; font-size: 12px; width: fit-content; max-width: none; margin-bottom: 9px; position: relative;}
-.show-img .ccb-tabtitle + .ccb-player {border-top: 0;}
+.show-img:not(.tabMain) .ccb-tabtitle + .ccb-player {border-top: 0;}
 .tabMain .ccb-tabtitle, .tabTalk .ccb-tabtitle {display:none;}
 
 /*(디폴트)두상있는 발언*/
@@ -74,7 +74,7 @@ span.dice-line { background-color: #111; font-size: 13px; line-height: 1.4!impor
 
 #ccb-btn { background: #ae70ff; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; width: 60px;}
 
-#ccb-lst {  display: none; position: absolute; top: 35px; right: 0; background: #444; padding: 10px; border-radius: 8px; border: 1px solid #777; z-index: 1000; width: max-content; box-shadow: 0 4px 15px rgba(0,0,0,0.5);}
+#ccb-lst {  display: none; position: absolute; top: 35px; right: 0; background: #444; padding: 10px; border-radius: 8px; border: 1px solid #777; z-index: 1000; width: max-content; box-shadow: 0 2px 5px rgba(0,0,0,0.3);}
 
 #ccb-lst.show { display: grid; gap: 8px; }
 .ccbtoggle { display: flex; align-items: center; gap: 3px; cursor: pointer; font-size: 12px; color: #eee; }

@@ -13,13 +13,14 @@
 .tt_article_useless_p_margin p {padding-top: 7px !important; padding-bottom: 7px !important;} /*티스토리깨짐방지*/
 
 .ccb-player b { display: inline; margin-bottom: unset; margin-right: 5px; color:#000000; } /*발언자 이름 설정*/
-.ccb-player:after {display: none; width:30px; height:30px; top:7px;   background-color: rgba(0,0,0,0.2); } /*발언자 두상*/
+.ccb-player:after {display: none; width:30px; height:30px; top:7px;   background-color: rgba(0,0,0,0); } /*발언자 두상 설정*/
 
 /*==탭 기본 설정==*/
 .ccb-tab {background: #e1e1e1;}
 .ccb-tabtitle {max-height: 26px;white-space: nowrap; text-overflow: ellipsis;}
 
-.tabMain .ccb-player {min-height: 30px; padding: 7px 15px 7px 55px!important;} /*메인탭 발언 여백*/
+/*두상있는 발언*/
+.show-img .ccb-player {min-height: 30px; padding: 7px 15px 7px 55px!important;} 
 
 .tabMain { background: #f1f1f1; } /*메인탭 배경색*/
 
@@ -46,10 +47,15 @@
 #cocoback .p_system { color: #222222;} 
 #cocoback .p_system b { background:#0071cc; }
 
-.ccbtoggle { background: #e1e1e1; color:#000000; accent-color:#0071cc; } /*우측상단 탭버튼*/
-
 span.dice-line { background: #fef68e; border: 2px solid #b31515; padding: 4.5px 9px;} /*주사위*/
 
 /*==연속 발언 처리==*/
 #cocoback .continued-line { margin-top: -5px!important; padding-top: 3px !important; }
 
+.ccbtoggle { background: #e1e1e1;  accent-color:#0071cc; } /*우측상단 탭버튼*/
+/* ==탭 조작==*/
+#ccb-ui { position: relative; display: inline-block; margin-left: 10px; }
+#ccb-btn { background: #0071cc; }
+#ccb-lst { background: #e1e1e1; }
+.ccbtoggle { color:#000000; }
+.ccbtoggle input { accent-color: #0071cc; }
