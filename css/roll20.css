@@ -52,6 +52,6 @@ span.dice-line { background: #fef68e; border: 2px solid #b31515; padding: 4.5px 
 
 /* ==탭 조작==*/
 #ccb-btn { background: #0071cc; }
-#ccb-lst { background: #e1e1e1; }
+#ccb-lst { background: #ffffff; }
 .ccbtoggle { color:#000000; }
 .ccbtoggle input { accent-color: #0071cc; }
