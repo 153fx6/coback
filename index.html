@@ -271,13 +271,13 @@ document.getElementById('btn_add_tab').onclick = function() {
 
 // 통합 저장
 document.getElementById('btn_save_all').onclick = function() {
-    let output = "%set1%\n";
+    let output = "@@@set1@@@\n";
     const sTitle = document.getElementById('s_title').value || "";
     const sCard = document.getElementById('s_card').value || "";
     const sWidth = document.getElementById('s_width').value || "1200px";
     output += `${sTitle}|${sCard}|${sWidth};\n`;
 
-    output += "%set2%\n";
+    output += "@@@set2@@@\n";
     document.querySelectorAll('.char-row').forEach(row => {
         const name = row.querySelector('.c_name').value;
         const img = row.querySelector('.c_img').value.trim();
@@ -296,7 +296,7 @@ document.getElementById('btn_save_all').onclick = function() {
         }
     });
 
-    output += "%set3%\n";
+    output += "@@@set3@@@\n";
     // 기본 탭 3종
     output += `메인|${document.getElementById('t_main_on').checked ? "on" : "off"};\n`;
     output += `정보|${document.getElementById('t_info_on').checked ? "on" : "off"};\n`;
@@ -326,7 +326,7 @@ document.getElementById('btn_load_all').onclick = () => document.getElementById(
 document.getElementById('f_all_config').onchange = async function(e) {
     if (!e.target.files.length) return;
     const text = await e.target.files[0].text();
-    const sections = text.split(/%set\d%/);
+    const sections = text.split(/@@@set\d@@@/);
     
     // --- 1. 세션 설정 복구 ---
     const sData = (sections[1] || "").trim().split(';')[0].split('|');
