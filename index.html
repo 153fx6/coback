@@ -10,6 +10,7 @@
         .container { max-width: 800px; margin: 0 auto; background: #585858; padding: 25px; border-radius: 15px; }
 		
         section { border-bottom: 1px solid #333; padding: 15px 0 40px; }
+			.sec_save {text-align:center; padding:30px 100px;}
 		
         h1 { text-align: center; color: #fff; }
 		
@@ -61,16 +62,23 @@
 		summary::-webkit-details-marker { display: none; }
 		
 @media screen and (max-width: 768px) {
-    .char-row {display: flex; flex-wrap: wrap;}
+    .char-row, .tab-row {display: flex; flex-wrap: wrap;}
 
     .c_name { flex: 1 1 120px; order: 1; }
     .c_thumb { flex: 0 0 41px; order: 2; }
     .c_img { flex: 1 1 100%; order: 3; }
-    .color-group { flex: 1 1 auto; order: 4; justify-content: flex-end; }
+    .color-group { flex: 0 0 auto; order: 4; justify-content: flex-end; }
     .check-group { flex: 1 1 auto; order: 5; display: flex; gap: 10px; }
     .btn-del { flex: 0 0 auto; order: 6; margin-left: auto; }
+	
+	.t_name {flex: 1 1 120px; order: 1;}
+	.tab-label {flex: 0 0 80px; order: 2;}
 
     input[type="text"] { font-size: 14px; }
+	
+	.sec_save {padding:30px 0px;}
+	.sec_save > div {padding: 10px!important;}
+	
 }
     </style>
 </head>
@@ -144,7 +152,7 @@
 </details>	
 	</section>
 
-	<section style="text-align:center; padding:30px 100px;">
+	<section class="sec_save">
 
 	<div style="border-radius: 10px; background: #656565; padding: 30px;">
 		<h3 style="margin-top: 0;">📌 전체 설정 저장</h3>
