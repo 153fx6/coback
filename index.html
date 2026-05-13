@@ -712,9 +712,10 @@ async function processLogData() {
                 let isContinued = ((name !== "" || isRegistered) && name === lastSpeaker);
                 let pClass = "ccb-player" + (isContinued ? " continued-line" : "") + (finalCharMap[name] ? " p_" + finalCharMap[name].pClass : "");
                 let messageHtml = spans[2].innerHTML;
-                if (/\(\d+[dD]\d+/.test(spans[2].textContent) || spans[2].textContent.includes('(choice ') || spans[2].textContent.includes('choice[')) {
-                    messageHtml = `<span class="dice-line">${messageHtml}</span>`;
-                }
+
+					if (spans[2].textContent.includes(') ＞ ')) {
+						messageHtml = `<span class="dice-line">${messageHtml}</span>`;
+					}
 
                 tabsHtml += `<p class="${pClass}"><b>${name}</b>${messageHtml}</p>`;
                 lastTabClass = currentTabClass; 
