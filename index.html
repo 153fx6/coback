@@ -713,7 +713,7 @@ async function processLogData() {
                 let pClass = "ccb-player" + (isContinued ? " continued-line" : "") + (finalCharMap[name] ? " p_" + finalCharMap[name].pClass : "");
                 let messageHtml = spans[2].innerHTML;
 
-					if (spans[2].textContent.includes(') ＞ ')) {
+					if (spans[2].textContent.includes(' ＞ ')) {
 						messageHtml = `<span class="dice-line">${messageHtml}</span>`;
 					}
 
