@@ -713,15 +713,9 @@ async function processLogData() {
                 let pClass = "ccb-player" + (isContinued ? " continued-line" : "") + (finalCharMap[name] ? " p_" + finalCharMap[name].pClass : "");
                 let messageHtml = spans[2].innerHTML;
 
-                // 기본
-                const hasDefaultDice = spans[2].textContent.includes(') ＞ ');
-
-                // coc7판
-                const isCoc7thDice = /^(CC(\(-?\d+\))?<=|CBR\(\d+,\d+\)|FAR\(\d+,\d+,\d+(,-?\d+)?\))/i.test(spans[2].textContent);
-
-                if (hasDefaultDice || isCoc7thDice) {
-                    messageHtml = `<span class="dice-line">${messageHtml}</span>`;
-                }
+					if (spans[2].textContent.includes(' ＞ ')) {
+						messageHtml = `<span class="dice-line">${messageHtml}</span>`;
+					}
 
                 tabsHtml += `<p class="${pClass}"><b>${name}</b>${messageHtml}</p>`;
                 lastTabClass = currentTabClass; 
